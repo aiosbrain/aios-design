@@ -1,6 +1,8 @@
 # AIOS Design System — HANDOFF
 
-**Status: P0 foundation DONE and verified. P1–P4 rollout remains.** Nothing committed yet (`aios-design/` is `git init`'d, no commits). Backlog epic: **W2.5** (`aios-team-brain/scripts/aios-backlog.mjs` → Linear). Full resume prompt: `aios-team-brain/docs/agent-handoffs.md` → "W2.5".
+**Status (2026-06-22): packages PUBLISHED, rollout in flight.** `@aios-alpha/design@0.1.0` + `@aios-alpha/ui@0.1.0` are live on npm. This repo is now `AIOS-alpha/aios-design` on GitHub (public, `main`). P1/website ✅ merged. P2/team-brain 🟡 PR #68 (in review). P3/workspace-GUI + P4/scaffold+docs 🟡 in progress (parallel agents, one PR per repo). Trusted Publishing wired (`.github/workflows/publish.yml`) — needs the per-package npmjs.com web-UI link to go live. Backlog epic: **W2.5** (Linear AIO-79..83). Memory: `project-design-system-rollout`.
+
+**Org scope is `@aios-alpha`** (npm org `aios-alpha`), NOT `@aios`. Consume: `npm i @aios-alpha/design @aios-alpha/ui`; in a Tailwind v4 global stylesheet → `@import "@aios-alpha/design/tokens.css"; @import "@aios-alpha/design/tailwind-theme.css"; @import "tailwindcss"; @source "<rel>/node_modules/@aios-alpha/ui/dist"; @custom-variant dark (&:where(.dark,.dark *));`. Light = `:root`; `class="dark"` on `<html>` switches.
 
 ## What this is
 One token-driven, **dual-mode (light + dark)** design system for every AIOS surface (website, team-brain, workspace GUI, scaffolded workspaces). Sibling to **vibrana.ai** (violet + lime), more indie-dev. Prototypable in Pencil, expressed as React components extending shadcn, documented in an agent-readable `DESIGN.md`.
