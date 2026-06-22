@@ -1,0 +1,51 @@
+name: Publish to npm (Trusted Publishing / OIDC)
+
+# Publishes @aios-alpha/design (root) and @aios-alpha/ui (react/) to npm using
+# OIDC Trusted Publishing — NO npm token stored anywhere. Triggered when a
+# GitHub Release is published (bump the package versions first, then release).
+#
+# One-time setup on npmjs.com (per package, web UI — can't be scripted):
+#   npmjs.com → @aios-alpha/design → Settings → Trusted Publisher → GitHub Actions:
+#     Organization/user: AIOS-alpha   Repository: aios-design
+#     Workflow filename: publish.yml  Allowed action: npm publish
+#   Repeat for @aios-alpha/ui. (Both packages live in this one repo + workflow.)
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # REQUIRED: lets the job mint the OIDC token npm verifies
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+
+      # Trusted publishing needs npm >= 11.5.1 (newer than the npm bundled with Node 22).
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      # @aios-alpha/design — DTCG tokens compiled to dist/ by build:tokens.
+      - name: Build tokens (@aios-alpha/design)
+        run: |
+          npm ci
+          npm run build:tokens
+      - name: Publish @aios-alpha/design
+        run: npm publish
+
+      # @aios-alpha/ui — React lib compiled to react/dist by tsc.
+      - name: Build + publish @aios-alpha/ui
+        working-directory: react
+        run: |
+          npm ci
+          npm run build
+          npm publish

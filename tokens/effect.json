@@ -1,0 +1,10 @@
+{
+  "glow": {
+    "violet":  { "$value": "0 0 60px rgba(139, 92, 246, 0.3)", "$type": "shadow" },
+    "lime":    { "$value": "0 0 60px rgba(132, 204, 22, 0.3)", "$type": "shadow" },
+    "emerald": { "$value": "0 0 60px rgba(16, 185, 129, 0.3)", "$type": "shadow" }
+  },
+  "blur": {
+    "glass": { "$value": "blur(12px)", "$type": "other" }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "font": {
+    "display": { "$value": "\"Space Grotesk\", system-ui, sans-serif", "$type": "fontFamily" },
+    "body":    { "$value": "\"Plus Jakarta Sans\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
+    "mono":    { "$value": "\"JetBrains Mono\", \"Fira Code\", Consolas, monospace", "$type": "fontFamily" }
+  },
+  "text": {
+    "display":  { "$value": "clamp(3rem, 2.5rem + 2.5vw, 5rem)",     "$type": "dimension" },
+    "h1":       { "$value": "clamp(2.5rem, 2rem + 2.5vw, 4rem)",     "$type": "dimension" },
+    "h2":       { "$value": "clamp(2rem, 1.5rem + 2.5vw, 3.5rem)",   "$type": "dimension" },
+    "h3":       { "$value": "clamp(1.5rem, 1.3rem + 1vw, 2rem)",     "$type": "dimension" },
+    "body-lg":  { "$value": "clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem)", "$type": "dimension" },
+    "body":     { "$value": "clamp(1rem, 0.95rem + 0.25vw, 1.15rem)",   "$type": "dimension" },
+    "small":    { "$value": "clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem)", "$type": "dimension" },
+    "label":    { "$value": "clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem)",  "$type": "dimension" }
+  },
+  "weight": {
+    "light":    { "$value": "300", "$type": "fontWeight" },
+    "regular":  { "$value": "400", "$type": "fontWeight" },
+    "medium":   { "$value": "500", "$type": "fontWeight" },
+    "semibold": { "$value": "600", "$type": "fontWeight" },
+    "bold":     { "$value": "700", "$type": "fontWeight" }
+  },
+  "leading": {
+    "tight":   { "$value": "1.1",  "$type": "number" },
+    "snug":    { "$value": "1.3",  "$type": "number" },
+    "normal":  { "$value": "1.5",  "$type": "number" },
+    "relaxed": { "$value": "1.7",  "$type": "number" },
+    "code":    { "$value": "1.6",  "$type": "number" }
+  },
+  "tracking": {
+    "tighter": { "$value": "-0.03em", "$type": "dimension" },
+    "tight":   { "$value": "-0.02em", "$type": "dimension" },
+    "snug":    { "$value": "-0.01em", "$type": "dimension" },
+    "normal":  { "$value": "0",       "$type": "dimension" },
+    "wide":    { "$value": "0.1em",   "$type": "dimension" }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "color": {
+    "bg":             { "$value": "#050505",                  "$type": "color" },
+    "surface":        { "$value": "#0a0a0a",                  "$type": "color" },
+    "elevated":       { "$value": "#141414",                  "$type": "color" },
+    "muted":          { "$value": "#1a1a1a",                  "$type": "color" },
+
+    "fg":             { "$value": "#fafafa",                  "$type": "color" },
+    "fg-secondary":   { "$value": "rgba(255, 255, 255, 0.72)","$type": "color" },
+    "fg-muted":       { "$value": "rgba(255, 255, 255, 0.5)", "$type": "color" },
+
+    "border":         { "$value": "rgba(255, 255, 255, 0.1)", "$type": "color" },
+    "border-visible": { "$value": "rgba(255, 255, 255, 0.15)","$type": "color" },
+    "border-strong":  { "$value": "rgba(255, 255, 255, 0.24)","$type": "color" },
+
+    "primary":        { "$value": "#8b5cf6",                  "$type": "color" },
+    "primary-hover":  { "$value": "#7c3aed",                  "$type": "color" },
+    "primary-fg":     { "$value": "#000000",                  "$type": "color" },
+
+    "accent":         { "$value": "#84cc16",                  "$type": "color" },
+    "accent-fg":      { "$value": "#000000",                  "$type": "color" },
+
+    "emerald":        { "$value": "#10b981",                  "$type": "color" },
+    "amber":          { "$value": "#f59e0b",                  "$type": "color" },
+    "cyan":           { "$value": "#2dd4bf",                  "$type": "color" },
+    "fuchsia":        { "$value": "#e879f9",                  "$type": "color" },
+
+    "destructive":    { "$value": "#ef4444",                  "$type": "color" },
+    "destructive-fg": { "$value": "#fafafa",                  "$type": "color" },
+
+    "ring":           { "$value": "#8b5cf6",                  "$type": "color" },
+    "code-bg":        { "$value": "#0a0a0a",                  "$type": "color" }
+  },
+  "shadow": {
+    "button":  { "$value": "none",                            "$type": "shadow" },
+    "card":    { "$value": "none",                            "$type": "shadow" },
+    "overlay": { "$value": "0 4px 32px rgba(0, 0, 0, 0.6)",   "$type": "shadow" }
+  }
+}

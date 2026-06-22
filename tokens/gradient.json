@@ -1,0 +1,8 @@
+{
+  "gradient": {
+    "primary":   { "$value": "linear-gradient(135deg, #8b5cf6 0%, #84cc16 100%)", "$type": "other" },
+    "accent":    { "$value": "linear-gradient(135deg, #84cc16 0%, #10b981 100%)", "$type": "other" },
+    "prism":     { "$value": "linear-gradient(135deg, #8b5cf6 0%, #10b981 50%, #84cc16 100%)", "$type": "other" },
+    "text-glow": { "$value": "linear-gradient(135deg, #a78bfa 0%, #84cc16 100%)", "$type": "other" }
+  }
+}

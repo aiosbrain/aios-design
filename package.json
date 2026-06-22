@@ -1,0 +1,27 @@
+{
+  "name": "@aios-alpha/design",
+  "version": "0.1.0",
+  "description": "AIOS unified design system — DTCG tokens, CSS variables, Tailwind v4 theme, and Pencil variables. Single source of truth for every AIOS surface.",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./tailwind-theme.css": "./dist/tailwind-theme.css",
+    "./tokens.pencil.json": "./dist/tokens.pencil.json",
+    "./DESIGN.md": "./DESIGN.md"
+  },
+  "files": [
+    "dist",
+    "tokens",
+    "DESIGN.md"
+  ],
+  "scripts": {
+    "build:tokens": "node build/build.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.3.0"
+  }
+}

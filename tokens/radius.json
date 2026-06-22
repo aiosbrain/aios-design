@@ -1,0 +1,11 @@
+{
+  "radius": {
+    "none": { "$value": "0px",    "$type": "dimension" },
+    "sm":   { "$value": "4px",    "$type": "dimension" },
+    "md":   { "$value": "6px",    "$type": "dimension" },
+    "lg":   { "$value": "10px",   "$type": "dimension" },
+    "xl":   { "$value": "14px",   "$type": "dimension" },
+    "2xl":  { "$value": "20px",   "$type": "dimension" },
+    "full": { "$value": "9999px", "$type": "dimension" }
+  }
+}

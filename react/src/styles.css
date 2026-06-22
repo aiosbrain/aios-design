@@ -1,0 +1,33 @@
+/* AIOS @aios/ui styles.
+   Order matters: tokens (CSS vars) -> Tailwind theme bridge -> Tailwind itself. */
+@import "../../dist/tokens.css";
+@import "../../dist/tailwind-theme.css";
+@import "tailwindcss";
+
+/* Self-hosted ecosystem fonts (no Google CDN). */
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/600.css";
+
+/* Dark mode is class-driven (class="dark" on <html>); tell Tailwind v4. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body {
+  background-color: var(--aios-bg);
+  color: var(--aios-fg);
+  font-family: var(--aios-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
