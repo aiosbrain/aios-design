@@ -17,6 +17,8 @@
     "primary-hover":  { "$value": "#2a2a2a",                 "$type": "color" },
     "primary-fg":     { "$value": "#ffffff",                 "$type": "color" },
 
+    "violet":         { "$value": "#7c3aed",                 "$type": "color" },
+
     "accent":         { "$value": "#84cc16",                 "$type": "color" },
     "accent-fg":      { "$value": "#0a0a0a",                 "$type": "color" },
 

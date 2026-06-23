@@ -54,17 +54,19 @@ export function KpiStat({
           className="flex h-7 items-end gap-[3px]"
           aria-hidden
         >
-          {spark.map((h, i) => (
+          {spark.map((h, i) => {
+            const normalized = Math.min(1, Math.max(0, h));
+            return (
             <span
               key={i}
               className="w-[3px] rounded-full"
               style={{
-                height: `${Math.max(8, Math.round(h * 100))}%`,
+                height: `${Math.max(8, Math.round(normalized * 100))}%`,
                 backgroundColor: accent,
-                opacity: 0.5 + (h * 0.5),
+                opacity: 0.5 + normalized * 0.5,
               }}
             />
-          ))}
+          )})}
         </div>
         {delta ? (
           <span

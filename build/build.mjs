@@ -88,7 +88,8 @@ const tw = `/* AIOS Tailwind v4 theme bridge — GENERATED. Import AFTER tokens.
   /* brand + supporting accents */
   --color-primary:               var(--aios-primary);
   --color-primary-foreground:    var(--aios-primary-fg);
-  --color-brand:                 var(--aios-primary);
+  --color-brand:                 var(--aios-violet);
+  --color-violet:                var(--aios-violet);
   --color-lime:                  var(--aios-accent);
   --color-lime-foreground:       var(--aios-accent-fg);
   --color-emerald:               var(--aios-emerald);

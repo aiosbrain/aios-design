@@ -1,7 +1,7 @@
 /* AIOS @aios/ui styles.
    Order matters: tokens (CSS vars) -> Tailwind theme bridge -> Tailwind itself. */
-@import "../../dist/tokens.css";
-@import "../../dist/tailwind-theme.css";
+@import "@aios-alpha/design/tokens.css";
+@import "@aios-alpha/design/tailwind-theme.css";
 @import "tailwindcss";
 
 /* Self-hosted ecosystem fonts (no Google CDN). Editorial Minimal direction:

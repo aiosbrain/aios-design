@@ -87,12 +87,15 @@ const ALL_IDS = NAV.flatMap((g) => g.items.map((i) => i.id));
 function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
+    const visible = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        }
+        const topmost = ids.find((id) => visible.has(id));
+        if (topmost) setActive(topmost);
       },
       // Trigger band sits near the top of the viewport for a docs feel.
       { rootMargin: "-20% 0px -70% 0px", threshold: 0 },
@@ -241,17 +244,19 @@ export function KitchenSink() {
           id="introduction"
           className="relative isolate scroll-mt-24 overflow-hidden"
         >
-          {/* Animated spotlight glow — soft pastel emerald/violet/cyan blend.
-              z-0 (inside the isolated section) sits above the matte canvas but
-              below the z-10 hero content. */}
+          {/* Animated spotlight glow — outer div holds centering; inner animates drift. */}
           <div
             aria-hidden
-            className="aios-spotlight pointer-events-none absolute left-1/2 top-10 z-0 h-[480px] w-[800px] -translate-x-1/2 rounded-full opacity-30 blur-[64px] dark:opacity-40"
-            style={{
-              background:
-                "radial-gradient(closest-side at 32% 42%, #8b5cf6 0%, rgba(139,92,246,0.55) 45%, transparent 80%), radial-gradient(closest-side at 68% 52%, #10b981 0%, rgba(16,185,129,0.55) 45%, transparent 80%), radial-gradient(closest-side at 50% 30%, #22d3ee 0%, rgba(34,211,238,0.5) 45%, transparent 82%)",
-            }}
-          />
+            className="pointer-events-none absolute left-1/2 top-10 z-0 h-[480px] w-[800px] -translate-x-1/2"
+          >
+            <div
+              className="aios-spotlight h-full w-full rounded-full opacity-30 blur-[64px] dark:opacity-40"
+              style={{
+                background:
+                  "radial-gradient(closest-side at 32% 42%, #8b5cf6 0%, rgba(139,92,246,0.55) 45%, transparent 80%), radial-gradient(closest-side at 68% 52%, #10b981 0%, rgba(16,185,129,0.55) 45%, transparent 80%), radial-gradient(closest-side at 50% 30%, #22d3ee 0%, rgba(34,211,238,0.5) 45%, transparent 82%)",
+              }}
+            />
+          </div>
 
           <div className="relative z-10 mx-auto max-w-[880px] px-8 pt-10">
             <GlassNav

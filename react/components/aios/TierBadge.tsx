@@ -4,7 +4,7 @@ export type Tier = "team" | "external" | "admin";
 
 const TIER_STYLES: Record<Tier, string> = {
   // team -> violet, external -> cyan, admin -> neutral
-  team: "border-primary/30 bg-primary/10 text-primary",
+  team: "border-violet/30 bg-violet/10 text-violet",
   external: "border-cyan/30 bg-cyan/10 text-cyan",
   admin: "border-input bg-muted text-muted-foreground",
 };

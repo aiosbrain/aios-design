@@ -10,11 +10,11 @@ export type Kind =
 
 /* Color semantics adapted from aios-team-brain/components/kind-badge.tsx,
    re-expressed through the AIOS bridge tokens (no raw tailwind palette names):
-     deliverable -> violet (primary)   transcript  -> cyan
+     deliverable -> violet (brand)   transcript  -> cyan
      decision    -> amber               task        -> emerald
      skill       -> fuchsia             artifact    -> neutral */
 const KIND_STYLES: Record<Kind, string> = {
-  deliverable: "border-primary/25 bg-primary/10 text-primary",
+  deliverable: "border-violet/25 bg-violet/10 text-violet",
   transcript: "border-cyan/30 bg-cyan/10 text-cyan",
   decision: "border-amber/30 bg-amber/10 text-amber",
   task: "border-emerald/30 bg-emerald/10 text-emerald",
