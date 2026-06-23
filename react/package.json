@@ -40,6 +40,8 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@fontsource/instrument-sans": "^5.2.8",
+    "@fontsource/instrument-serif": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.1.0",
     "@fontsource/plus-jakarta-sans": "^5.1.0",
     "@fontsource/space-grotesk": "^5.1.0",

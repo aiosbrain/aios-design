@@ -11,7 +11,7 @@ export interface StatClusterProps
   stats: Stat[];
 }
 
-/** Large Space Grotesk numbers with mono lime descriptors. */
+/** Large serif numbers with mono muted descriptors. */
 export function StatCluster({ stats, className, ...props }: StatClusterProps) {
   return (
     <div
@@ -20,10 +20,10 @@ export function StatCluster({ stats, className, ...props }: StatClusterProps) {
     >
       {stats.map((stat) => (
         <div key={stat.label} className="flex flex-col gap-1">
-          <span className="font-display text-[var(--aios-text-h1)] font-bold leading-tight tracking-[-0.02em] text-foreground">
+          <span className="font-display text-[length:var(--aios-text-h1)] font-normal leading-tight tracking-[-0.02em] text-foreground">
             {stat.value}
           </span>
-          <span className="font-mono text-[var(--aios-text-label)] uppercase tracking-[0.1em] text-lime">
+          <span className="font-mono text-[length:var(--aios-text-label)] uppercase tracking-[0.1em] text-muted-foreground">
             {stat.label}
           </span>
         </div>

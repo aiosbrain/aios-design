@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 export interface EyebrowLabelProps
   extends React.HTMLAttributes<HTMLSpanElement> {}
 
-/** Uppercase mono lime eyebrow with 0.1em tracking — sits above section headings. */
+/** Uppercase mono muted eyebrow with 0.1em tracking — sits above section headings. */
 export function EyebrowLabel({
   className,
   children,
@@ -13,7 +13,7 @@ export function EyebrowLabel({
   return (
     <span
       className={cn(
-        "inline-block font-mono text-[var(--aios-text-label)] font-semibold uppercase tracking-[0.1em] text-lime",
+        "inline-block font-mono text-[length:var(--aios-text-label)] font-semibold uppercase tracking-[0.1em] text-muted-foreground",
         className,
       )}
       {...props}

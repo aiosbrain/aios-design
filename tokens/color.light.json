@@ -1,20 +1,20 @@
 {
   "color": {
-    "bg":             { "$value": "#fafafa",                 "$type": "color" },
+    "bg":             { "$value": "#ffffff",                 "$type": "color" },
     "surface":        { "$value": "#ffffff",                 "$type": "color" },
     "elevated":       { "$value": "#ffffff",                 "$type": "color" },
     "muted":          { "$value": "#f4f4f5",                 "$type": "color" },
 
-    "fg":             { "$value": "rgba(15, 15, 17, 0.95)",  "$type": "color" },
-    "fg-secondary":   { "$value": "rgba(15, 15, 17, 0.66)",  "$type": "color" },
-    "fg-muted":       { "$value": "rgba(15, 15, 17, 0.48)",  "$type": "color" },
+    "fg":             { "$value": "#1a1a1a",                 "$type": "color" },
+    "fg-secondary":   { "$value": "#57534e",                 "$type": "color" },
+    "fg-muted":       { "$value": "#a8a29e",                 "$type": "color" },
 
-    "border":         { "$value": "rgba(0, 0, 0, 0.08)",     "$type": "color" },
-    "border-visible": { "$value": "rgba(0, 0, 0, 0.12)",     "$type": "color" },
+    "border":         { "$value": "rgba(0, 0, 0, 0.10)",     "$type": "color" },
+    "border-visible": { "$value": "rgba(0, 0, 0, 0.14)",     "$type": "color" },
     "border-strong":  { "$value": "rgba(0, 0, 0, 0.22)",     "$type": "color" },
 
-    "primary":        { "$value": "#7c3aed",                 "$type": "color" },
-    "primary-hover":  { "$value": "#6d28d9",                 "$type": "color" },
+    "primary":        { "$value": "#0a0a0a",                 "$type": "color" },
+    "primary-hover":  { "$value": "#2a2a2a",                 "$type": "color" },
     "primary-fg":     { "$value": "#ffffff",                 "$type": "color" },
 
     "accent":         { "$value": "#84cc16",                 "$type": "color" },
@@ -28,12 +28,12 @@
     "destructive":    { "$value": "#ef4444",                 "$type": "color" },
     "destructive-fg": { "$value": "#ffffff",                 "$type": "color" },
 
-    "ring":           { "$value": "#7c3aed",                 "$type": "color" },
+    "ring":           { "$value": "#1a1a1a",                 "$type": "color" },
     "code-bg":        { "$value": "#f4f4f5",                 "$type": "color" }
   },
   "shadow": {
-    "button":  { "$value": "0 1px 2px rgba(0, 0, 0, 0.06)",  "$type": "shadow" },
-    "card":    { "$value": "0 4px 16px rgba(0, 0, 0, 0.06)", "$type": "shadow" },
-    "overlay": { "$value": "0 4px 28px rgba(0, 0, 0, 0.08)", "$type": "shadow" }
+    "button":  { "$value": "none",                          "$type": "shadow" },
+    "card":    { "$value": "0 1px 2px rgba(0, 0, 0, 0.04)", "$type": "shadow" },
+    "overlay": { "$value": "0 8px 32px rgba(0, 0, 0, 0.10)", "$type": "shadow" }
   }
 }

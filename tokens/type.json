@@ -1,7 +1,7 @@
 {
   "font": {
-    "display": { "$value": "\"Space Grotesk\", system-ui, sans-serif", "$type": "fontFamily" },
-    "body":    { "$value": "\"Plus Jakarta Sans\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
+    "display": { "$value": "\"Instrument Serif\", Georgia, \"Times New Roman\", serif", "$type": "fontFamily" },
+    "body":    { "$value": "\"Instrument Sans\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
     "mono":    { "$value": "\"JetBrains Mono\", \"Fira Code\", Consolas, monospace", "$type": "fontFamily" }
   },
   "text": {
