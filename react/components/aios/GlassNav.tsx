@@ -31,7 +31,7 @@ export function GlassNav({
     >
       <div className="flex items-center">{logo}</div>
       {links ? (
-        <div className="hidden items-center gap-6 font-mono text-[var(--aios-text-small)] text-muted-foreground md:flex">
+        <div className="hidden items-center gap-6 font-mono text-[length:var(--aios-text-small)] text-muted-foreground md:flex">
           {links}
         </div>
       ) : null}

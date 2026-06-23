@@ -48,7 +48,7 @@ export function TerminalFrame({
                 : "bg-muted-foreground/50",
             )}
           />
-          <span className="font-mono text-[var(--aios-text-small)] text-muted-foreground">
+          <span className="font-mono text-[length:var(--aios-text-small)] text-muted-foreground">
             {filename}
           </span>
         </div>
@@ -66,7 +66,7 @@ export function TerminalFrame({
         </button>
       </div>
       <pre className="overflow-x-auto px-4 py-4">
-        <code className="font-mono text-[var(--aios-text-small)] leading-[var(--aios-leading-code)] text-foreground">
+        <code className="font-mono text-[length:var(--aios-text-small)] leading-[var(--aios-leading-code)] text-foreground">
           {code}
         </code>
       </pre>

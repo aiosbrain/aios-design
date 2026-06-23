@@ -36,7 +36,7 @@ export const CardTitle = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "font-display text-[var(--aios-text-h3)] font-semibold leading-tight tracking-[-0.01em]",
+      "font-display text-[length:var(--aios-text-h3)] font-normal leading-tight tracking-[-0.01em]",
       className,
     )}
     {...props}
@@ -50,7 +50,7 @@ export const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--aios-text-small)] text-muted-foreground", className)}
+    className={cn("text-[length:var(--aios-text-small)] text-muted-foreground", className)}
     {...props}
   />
 ));

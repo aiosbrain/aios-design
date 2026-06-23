@@ -26,7 +26,7 @@ export const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-mono text-[var(--aios-text-small)] font-medium text-muted-foreground transition-all",
+      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-mono text-[length:var(--aios-text-small)] font-medium text-muted-foreground transition-all",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
       "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
       className,
@@ -43,7 +43,7 @@ export const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-4 text-[var(--aios-text-body)] text-foreground focus-visible:outline-none",
+      "mt-4 text-[length:var(--aios-text-body)] text-foreground focus-visible:outline-none",
       className,
     )}
     {...props}
