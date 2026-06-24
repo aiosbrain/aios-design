@@ -1,6 +1,6 @@
 {
   "name": "@aios-alpha/ui",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "AIOS design system — React component library. shadcn-style primitives + AIOS-specific components, themed through the @aios-alpha/design Tailwind v4 bridge.",
   "type": "module",
   "license": "MIT",

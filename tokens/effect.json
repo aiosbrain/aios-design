@@ -5,6 +5,7 @@
     "emerald": { "$value": "0 0 60px rgba(16, 185, 129, 0.3)", "$type": "shadow" }
   },
   "blur": {
-    "glass": { "$value": "blur(12px)", "$type": "other" }
+    "glass":        { "$value": "blur(12px)", "$type": "other" },
+    "glass-strong": { "$value": "blur(20px)", "$type": "other" }
   }
 }

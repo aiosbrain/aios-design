@@ -185,3 +185,15 @@ Install both packages. `@aios-alpha/ui` lists `@aios-alpha/design` as a peer dep
 - Don't faux-bold Instrument Serif.
 - Don't use `text-[var(--aios-text-*)]` for font sizes in Tailwind v4.
 - Don't hand-edit `dist/` — run `npm run build:tokens`.
+
+---
+
+## 0.3.0 — Effects layer
+
+Editorial restraint extended with a subtle, rationed effects layer (light + dark, per-mode):
+
+- **Eased off-white** — `--aios-bg: #fafaf8` (light); `surface`/`elevated` stay pure white so cards read as a free elevation step; `muted: #f3f3f0`. Dark unchanged.
+- **Card glow** — graded, neutral-by-default shadows `--aios-shadow-glow-card` / `-card-hover`, plus an opt-in brand-tinted `--aios-shadow-glow-featured` / `-featured-hover` (tint ≤ .14 light / .22 dark). Colourless resting state; colour only on featured/hover.
+- **Liquid glass** — `--aios-glass-bg` / `-border` / `-highlight` / `-inset` + `--aios-blur-glass` / `-glass-strong`. Recipe: `background: glass-bg; backdrop-filter: var(--aios-blur-glass) saturate(1.4); box-shadow: inset highlight + inset depth`. For nav, frosted bands, modals.
+
+All are per-mode design-system tokens, so consumers get them for free. Compose presentation (bokeh fields, prism-border buttons, link underlines) in the consuming app referencing these tokens — never vendor the values.

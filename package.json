@@ -1,6 +1,6 @@
 {
   "name": "@aios-alpha/design",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "AIOS unified design system — DTCG tokens, CSS variables, Tailwind v4 theme, and Pencil variables. Editorial Minimal direction: greyscale chrome, Instrument typography, colour rationed to badges and data viz.",
   "type": "module",
   "license": "MIT",

@@ -1,9 +1,9 @@
 {
   "color": {
-    "bg":             { "$value": "#ffffff",                 "$type": "color" },
+    "bg":             { "$value": "#fafaf8",                 "$type": "color" },
     "surface":        { "$value": "#ffffff",                 "$type": "color" },
     "elevated":       { "$value": "#ffffff",                 "$type": "color" },
-    "muted":          { "$value": "#f4f4f5",                 "$type": "color" },
+    "muted":          { "$value": "#f3f3f0",                 "$type": "color" },
 
     "fg":             { "$value": "#1a1a1a",                 "$type": "color" },
     "fg-secondary":   { "$value": "#57534e",                 "$type": "color" },
@@ -34,8 +34,19 @@
     "code-bg":        { "$value": "#f4f4f5",                 "$type": "color" }
   },
   "shadow": {
-    "button":  { "$value": "none",                          "$type": "shadow" },
-    "card":    { "$value": "0 1px 2px rgba(0, 0, 0, 0.04)", "$type": "shadow" },
-    "overlay": { "$value": "0 8px 32px rgba(0, 0, 0, 0.10)", "$type": "shadow" }
+    "button":             { "$value": "none",                          "$type": "shadow" },
+    "card":               { "$value": "0 1px 2px rgba(0, 0, 0, 0.04)", "$type": "shadow" },
+    "overlay":            { "$value": "0 8px 32px rgba(0, 0, 0, 0.10)", "$type": "shadow" },
+
+    "glow-card":          { "$value": "0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.10)",   "$type": "shadow" },
+    "glow-card-hover":    { "$value": "0 2px 4px rgba(0, 0, 0, 0.05), 0 18px 40px -16px rgba(0, 0, 0, 0.16)",  "$type": "shadow" },
+    "glow-featured":      { "$value": "0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 50px -18px rgba(124, 58, 237, 0.14)", "$type": "shadow" },
+    "glow-featured-hover":{ "$value": "0 2px 4px rgba(0, 0, 0, 0.05), 0 24px 64px -18px rgba(124, 58, 237, 0.22)", "$type": "shadow" }
+  },
+  "glass": {
+    "bg":        { "$value": "rgba(255, 255, 255, 0.72)", "$type": "color" },
+    "border":    { "$value": "rgba(0, 0, 0, 0.08)",       "$type": "color" },
+    "highlight": { "$value": "rgba(255, 255, 255, 0.60)", "$type": "color" },
+    "inset":     { "$value": "rgba(0, 0, 0, 0.04)",       "$type": "color" }
   }
 }

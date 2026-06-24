@@ -34,8 +34,19 @@
     "code-bg":        { "$value": "#131313",                  "$type": "color" }
   },
   "shadow": {
-    "button":  { "$value": "none",                            "$type": "shadow" },
-    "card":    { "$value": "none",                            "$type": "shadow" },
-    "overlay": { "$value": "0 8px 40px rgba(0, 0, 0, 0.7)",   "$type": "shadow" }
+    "button":             { "$value": "none",                            "$type": "shadow" },
+    "card":               { "$value": "none",                            "$type": "shadow" },
+    "overlay":            { "$value": "0 8px 40px rgba(0, 0, 0, 0.7)",   "$type": "shadow" },
+
+    "glow-card":          { "$value": "0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 40px -20px rgba(0, 0, 0, 0.80)", "$type": "shadow" },
+    "glow-card-hover":    { "$value": "0 0 0 1px rgba(255, 255, 255, 0.08), 0 20px 50px -18px rgba(0, 0, 0, 0.85)", "$type": "shadow" },
+    "glow-featured":      { "$value": "0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 60px -10px rgba(139, 92, 246, 0.18)", "$type": "shadow" },
+    "glow-featured-hover":{ "$value": "0 0 0 1px rgba(255, 255, 255, 0.10), 0 0 80px -8px rgba(139, 92, 246, 0.28)", "$type": "shadow" }
+  },
+  "glass": {
+    "bg":        { "$value": "rgba(19, 19, 19, 0.62)",   "$type": "color" },
+    "border":    { "$value": "rgba(255, 255, 255, 0.08)","$type": "color" },
+    "highlight": { "$value": "rgba(255, 255, 255, 0.10)","$type": "color" },
+    "inset":     { "$value": "rgba(0, 0, 0, 0.50)",      "$type": "color" }
   }
 }
