@@ -1,12 +1,16 @@
 # Pencil prototyping setup
 
-Pencil's MCP can only act on a `.pen` file that is **open in the Pencil editor app**. Every Pencil MCP tool (even `get_guidelines`) errors with "A file needs to be open in the editor" until then. Creating/opening the file is the one step an agent cannot do for you.
+Pencil's MCP can only act on a `.pen` file that is **open in the Pencil editor app**. Every Pencil MCP tool (even `get_guidelines`) errors with "A file needs to be open in the editor" until then. Opening the file is the one step an agent cannot do for you.
+
+The source file (`aios-design.pen`) is **committed to this repo via Git LFS** — it is the source of truth for the product mockups and the Team Brain network-graph prototypes. So a fresh clone already has it; you just need Git LFS installed to materialize and open it.
 
 ## One-time setup (you do this)
 
-1. Open the **Pencil.dev** desktop app.
-2. Create a new file and save it as `aios.pen` in this folder (`aios-design/`).
+1. Install **[Git LFS](https://git-lfs.com)** if you haven't: `git lfs install` (once per machine). If you cloned this repo *before* installing LFS, run `git lfs pull` — until then `aios-design.pen` is a tiny text pointer, not the real binary. (See the README's Prerequisites.)
+2. Open the **Pencil.dev** desktop app, then open `aios-design.pen` from this folder (`aios-design/`). *(Starting a brand-new file instead? Save it with that exact name so it lands as the LFS-tracked file.)*
 3. Leave it open and tell Claude "the pen file is open."
+
+> Every Pencil save commits as a small LFS pointer plus a deduplicated LFS object, so the ~2 MB binary never bloats normal git history.
 
 ## What the agent does next (automated, once the file is open)
 
