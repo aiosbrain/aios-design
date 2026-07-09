@@ -1,5 +1,5 @@
 ---
-version: 0.2.0
+version: 0.3.0
 name: AIOS Design System
 description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
 direction: Editorial Minimal
@@ -11,10 +11,10 @@ modes:
     note: every surface ships BOTH modes with a toggle; the value above is only the initial default.
 colors:
   light:
-    bg: "#ffffff"
+    bg: "#fafaf8"
     surface: "#ffffff"
     elevated: "#ffffff"
-    muted: "#f4f4f5"
+    muted: "#f3f3f0"
     fg: "#1a1a1a"
     fg-secondary: "#57534e"
     fg-muted: "#a8a29e"

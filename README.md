@@ -34,10 +34,10 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 
 ## Consume in another repo
 
-Install both packages (npm, same version — currently **0.2.0**):
+Install both packages (npm, same version — currently **0.3.0**):
 
 ```bash
-npm install @aios-alpha/design@^0.2.0 @aios-alpha/ui@^0.2.0
+npm install @aios-alpha/design@^0.3.0 @aios-alpha/ui@^0.3.0
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -73,7 +73,7 @@ import { Button, TierBadge, AiosMark, KpiStat } from "@aios-alpha/ui";
 
 **Raw CSS (no Tailwind)** — import `tokens.css` and use `var(--aios-*)` directly.
 
-### Semantic tokens (0.2.0)
+### Semantic tokens (0.3.0)
 
 | Token | Use for |
 |-------|---------|
@@ -81,6 +81,8 @@ import { Button, TierBadge, AiosMark, KpiStat } from "@aios-alpha/ui";
 | `--aios-violet` | Brand mark, team/deliverable badges, link accents |
 | `--aios-accent` | Lime — live status, checks, rationed affirmative actions |
 | `--aios-emerald/amber/cyan/fuchsia` | Kind/tier badges, KPI sparklines |
+
+0.3.0 also adds a per-mode effects layer — card-glow shadows (`--aios-shadow-glow-card*` / `-featured*`) and liquid-glass tokens (`--aios-glass-*`, `--aios-blur-glass*`) — see the "0.3.0 — Effects layer" section in `DESIGN.md`.
 
 ### Migrating from 0.1.x
 
