@@ -7,3 +7,11 @@ node_modules/
 dist/
 react/dist/
 *.tsbuildinfo
+
+# design-sync machine state
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+react/.ds-css-build/

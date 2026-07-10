@@ -1,0 +1,18 @@
+{
+  "projectId": "0380b1b4-44be-4f18-9ea1-c431db2359c3",
+  "shape": "package",
+  "pkg": "@aios-alpha/ui",
+  "globalName": "AiosUI",
+  "buildCmd": "cd react && npm run build && npx vite build --base ./ --outDir .ds-css-build --emptyOutDir && cp .ds-css-build/assets/index-*.css .ds-css-build/assets/compiled.css",
+  "cssEntry": ".ds-css-build/assets/compiled.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "overrides": {
+    "Dialog": { "cardMode": "single", "viewport": "720x480" },
+    "GlassNav": { "cardMode": "column" }
+  },
+  "componentSrcMap": {
+    "cn": null,
+    "buttonVariants": null,
+    "badgeVariants": null
+  }
+}
