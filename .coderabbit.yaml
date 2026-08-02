@@ -1,0 +1,211 @@
+# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
+#
+# CodeRabbit — aios-design (the pinned design contract + published npm packages)
+# ---------------------------------------------------------------------------
+# NOTE: no `version:` key exists in the schema (root is additionalProperties:false).
+#
+# PLAN. Org is on Pro; this repo is PUBLIC and may receive Pro+ features free
+# (CodeRabbit's plans page and its older KB conflict on this — unresolved).
+# Pro+-gated blocks are included; on plain Pro they parse and never run.
+#   >> Blocks marked "PRO+ ONLY" may be silently inert.
+#
+# RATE LIMITS. ~6 PRs/month. Not a quota concern; settings are the least
+# restrictive of the five repos.
+#
+# FOCUS. This repo is a PUBLISHED PACKAGE (@aios-alpha/design, @aios-alpha/ui)
+# and the source of truth for every AIOS surface. The expensive mistakes are
+# breaking token renames that silently break three consumer repos, and hand-
+# editing built output instead of the token source.
+# ---------------------------------------------------------------------------
+
+language: "en-US"
+tone_instructions: "Be terse. No praise, no restating the diff. Only report what would change the merge decision."
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+
+  high_level_summary: true
+  poem: false
+  in_progress_fortune: false
+  sequence_diagrams: false
+  changed_files_summary: false
+  suggested_reviewers: false
+  suggested_labels: false
+  review_status: false
+  estimate_code_review_effort: false
+  collapse_walkthrough: true
+  abort_on_close: true
+  enable_prompt_for_ai_agents: true
+
+  assess_linked_issues: true
+  related_prs: true
+  related_issues: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 3
+    base_branches:
+      - "^main$"
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+      - "[skip review]"
+      - "chore"
+      - "deps"
+      - "bump"
+    ignore_usernames:
+      - "dependabot[bot]"
+      - "renovate[bot]"
+      - "github-actions[bot]"
+
+  path_filters:
+    - "!node_modules/**"
+    - "!dist/**"
+    - "!build/**"
+    - "!ds-bundle/**"
+    - "!**/*.tgz"
+    - "!**/*.lock"
+    - "!package-lock.json"
+    - "!*.pen"              # encrypted Pencil design file, not reviewable
+    - "!network-viz/**"
+
+  path_instructions:
+    - path: "tokens/**"
+      instructions: |
+        The design token source of truth. Three AIOS repos consume the published
+        package, so a token RENAME or REMOVAL is a breaking change for all of
+        them, not a local edit. Flag any renamed or deleted token that is not
+        accompanied by a note in DESIGN.md and a package version bump. Adding a
+        token is safe; changing the meaning of an existing one is not.
+        Both light (:root default) and dark (.dark) modes must stay defined —
+        flag a token added to one mode only.
+
+    - path: "DESIGN.md"
+      instructions: |
+        The pinned design contract. Token values documented here must match
+        tokens/*.json — flag any value stated here that the token source does not
+        actually produce. This file changes FIRST, then the build; flag a PR that
+        changes built output without a corresponding contract change.
+
+    - path: "react/**"
+      instructions: |
+        shadcn-based components themed via the token bridge. Components must read
+        design tokens, never hardcode hex values, px spacing, or font stacks —
+        flag any literal colour or spacing value. Verify both light and dark modes
+        are handled, and that no component drops focus-visible styling.
+
+    - path: "package.json"
+      instructions: |
+        These are published, no-auth npm packages. Flag: a version bump without
+        matching changes, a removed or renamed export path (breaks every
+        consumer's import), and any dependency moved between dependencies and
+        peerDependencies without justification.
+
+  pre_merge_checks:
+    override_requested_reviewers_only: false
+    title:
+      mode: "warning"
+      requirements: |
+        Conventional Commits: <type>(<scope>): <subject>. Imperative mood, under
+        72 chars. Breaking token changes should use feat! or fix! notation.
+    description:
+      mode: "off"
+    issue_assessment:
+      mode: "warning"
+    docstrings:
+      mode: "off"
+      threshold: 80
+
+    # ----- PRO+ ONLY — may be silently inert on plain Pro. -----
+    custom_checks:
+      - name: "token change is contract-first"
+        mode: "warning"
+        instructions: |
+          DESIGN.md plus tokens/*.json change first; built output is regenerated,
+          never hand-edited.
+          Pass: no token change, OR tokens/*.json and DESIGN.md are updated
+          together and any generated output in dist/ or build/ is regenerated
+          rather than hand-edited.
+          Fail: a value in dist/, build/, or ds-bundle/ is edited directly without
+          the corresponding tokens/ source change, or a token value changes in
+          tokens/ with no matching update in DESIGN.md.
+
+      - name: "no breaking token rename without version bump"
+        mode: "warning"
+        instructions: |
+          Pass: no token or export is renamed or removed, OR the package version
+          in package.json is bumped and the PR description names the affected
+          consumers.
+          Fail: a design token, CSS custom property, or package export path is
+          renamed or removed with no version bump in package.json.
+
+  finishing_touches:
+    docstrings:
+      enabled: false
+    autofix:
+      enabled: true
+    unit_tests:
+      enabled: false      # PRO+ ONLY
+    simplify:
+      enabled: false      # PRO+ ONLY
+
+  tools:
+    eslint:
+      enabled: false
+    biome:
+      enabled: false
+    oxc:
+      enabled: false
+    markdownlint:
+      enabled: false
+    languagetool:
+      enabled: false
+    gitleaks:
+      enabled: true
+    trufflehog:
+      enabled: true
+    osvScanner:
+      enabled: true       # published package — dependency CVEs matter here
+    actionlint:
+      enabled: true
+    zizmor:
+      enabled: true
+    stylelint:
+      enabled: true
+    reactDoctor:
+      enabled: true
+
+  slop_detection:
+    enabled: true
+
+chat:
+  art: false
+  auto_reply: true
+  integrations:
+    linear:
+      usage: "enabled"
+
+knowledge_base:
+  opt_out: false
+  web_search:
+    enabled: true
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "DESIGN.md"
+      - "HANDOFF.md"
+      - "PENCIL.md"
+  learnings:
+    scope: "local"
+    approval_delay: 0
+  issues:
+    scope: "local"
+  pull_requests:
+    scope: "local"
+  linear:
+    usage: "enabled"
+    team_keys:
+      - "AIO"
