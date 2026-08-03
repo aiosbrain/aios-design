@@ -7,6 +7,7 @@ const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url
 
 test("package, lockfile, and published contract identify the same patch", () => {
   const pkg = readJson("../package.json");
+  const uiPkg = readJson("../react/package.json");
   const lock = readJson("../package-lock.json");
   const contract = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
   const readme = readFileSync(new URL("../README.md", import.meta.url), "utf8");
@@ -20,6 +21,8 @@ test("package, lockfile, and published contract identify the same patch", () => 
   assert.deepEqual(pkg.dependencies, {});
   assert.equal(pkg.devDependencies["style-dictionary"], "^5.4.4");
   assert.equal(lock.packages[""].devDependencies["style-dictionary"], "^5.4.4");
+  assert.equal(pkg.repository.url, "https://github.com/aiosbrain/aios-design.git");
+  assert.equal(uiPkg.repository.url, pkg.repository.url);
 });
 
 test("consumer exceptions stay narrow and shared token literals remain forbidden", () => {

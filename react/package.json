@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AIOS-alpha/aios-design.git",
+    "url": "https://github.com/aiosbrain/aios-design.git",
     "directory": "react"
   },
   "main": "./dist/index.js",
