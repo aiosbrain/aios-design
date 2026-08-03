@@ -1,5 +1,5 @@
 ---
-version: 0.3.0
+version: 0.3.1
 name: AIOS Design System
 description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
 direction: Editorial Minimal
@@ -110,7 +110,7 @@ gradients:
 - **`accent` (lime)** — live status, checks, rationed affirmative actions.
 - **Supporting** — emerald/amber/cyan/fuchsia for kind/tier badge semantics and data viz only.
 
-> **Source of truth:** `tokens/*.json` → `npm run build:tokens` → `dist/`. Change tokens + this file first — never hand-edit consuming repos.
+> **Source of truth:** `tokens/*.json` → `npm run build:tokens` → `dist/`. Change shared tokens + this file first — never copy a shared token's literal value into a consuming repo.
 
 ---
 
@@ -168,6 +168,17 @@ In the app global stylesheet, **in this order**:
 
 Install both packages. `@aios-alpha/ui` lists `@aios-alpha/design` as a peer dependency.
 
+### Consumer-owned colour exceptions
+
+The no-vendoring rule applies to values already represented by an `--aios-*` token. Consumers must
+reference those variables, including inside SVG and chart configuration. A consumer may own a raw
+colour only when it is a named third-party/provider identity colour or a fixed dark terminal/demo
+palette whose measured contrast cannot follow the page theme. Such values must live behind a
+product-prefixed semantic variable or a single named palette module, carry a local comment explaining
+the exception, and be covered by a test that rejects unreviewed additions. An exception is not
+permission to duplicate violet, accent, emerald, amber, cyan, fuchsia, destructive, surface, text,
+border, or effect literals.
+
 **Consumer migration from 0.1.x:** if you mapped local `--accent` to `--aios-primary`, update button CTAs to keep using `--aios-primary` (now editorial black/white). Map link/highlight washes to `--aios-violet` instead. Swap Space Grotesk / Plus Jakarta Sans font imports for Instrument Serif / Instrument Sans.
 
 ---
@@ -197,3 +208,14 @@ Editorial restraint extended with a subtle, rationed effects layer (light + dark
 - **Liquid glass** — `--aios-glass-bg` / `-border` / `-highlight` / `-inset` + `--aios-blur-glass` / `-glass-strong`. Recipe: `background: glass-bg; backdrop-filter: var(--aios-blur-glass) saturate(1.4); box-shadow: inset highlight + inset depth`. For nav, frosted bands, modals.
 
 All are per-mode design-system tokens, so consumers get them for free. Compose presentation (bokeh fields, prism-border buttons, link underlines) in the consuming app referencing these tokens — never vendor the values.
+
+---
+
+## 0.3.1 — Consumer colour governance
+
+- Shared semantic, surface, text, border, effect, and data-viz colours must reference the published
+  `--aios-*` variables, including SVG and chart configuration.
+- The only consumer-owned raw colours are a named third-party/provider identity or a fixed,
+  contrast-tested terminal/demo palette. Each exception needs a rationale and regression guard.
+- Framework adapter ramps and decorative bokeh are derived from canonical tokens; they are not
+  exceptions.
