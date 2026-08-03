@@ -23,24 +23,35 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           registry-url: "https://registry.npmjs.org"
 
       # Trusted publishing needs npm >= 11.5.1 (newer than the npm bundled with Node 22).
       - name: Upgrade npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11.5.1
+
+      - name: Verify release tag matches Design version
+        run: node scripts/verify-release-tag.mjs
 
       # @aios-alpha/design — DTCG tokens compiled to dist/ by build:tokens.
       - name: Build tokens (@aios-alpha/design)
         run: |
           npm ci
-          npm run build:tokens
+          npm test
       - name: Publish @aios-alpha/design
-        run: npm publish
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@aios-alpha/design@$VERSION" version >/dev/null 2>&1; then
+            echo "@aios-alpha/design@$VERSION already exists; skipping"
+          else
+            npm publish
+          fi
 
       # @aios-alpha/ui — React lib compiled to react/dist by tsc.
       - name: Build + publish @aios-alpha/ui
@@ -48,4 +59,9 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm publish
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@aios-alpha/ui@$VERSION" version >/dev/null 2>&1; then
+            echo "@aios-alpha/ui@$VERSION already exists; skipping"
+          else
+            npm publish
+          fi
