@@ -6,7 +6,7 @@ name: Publish to npm (Trusted Publishing / OIDC)
 #
 # One-time setup on npmjs.com (per package, web UI — can't be scripted):
 #   npmjs.com → @aios-alpha/design → Settings → Trusted Publisher → GitHub Actions:
-#     Organization/user: AIOS-alpha   Repository: aios-design
+#     Organization/user: aiosbrain   Repository: aios-design
 #     Workflow filename: publish.yml  Allowed action: npm publish
 #   Repeat for @aios-alpha/ui. (Both packages live in this one repo + workflow.)
 
