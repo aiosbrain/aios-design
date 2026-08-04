@@ -37,7 +37,7 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 Install the Design contract patch with the compatible UI package:
 
 ```bash
-npm install @aios-alpha/design@^0.3.1 @aios-alpha/ui@^0.3.0
+npm install @aios-alpha/design@^0.3.1 @aios-alpha/ui@^0.3.1
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -73,7 +73,7 @@ import { Button, TierBadge, AiosMark, KpiStat } from "@aios-alpha/ui";
 
 **Raw CSS (no Tailwind)** — import `tokens.css` and use `var(--aios-*)` directly.
 
-### Semantic tokens (0.3.1 contract; 0.3.0 token values)
+### Semantic tokens (0.3.1 contract; unchanged 0.3.0 token values)
 
 | Token | Use for |
 |-------|---------|
@@ -84,8 +84,9 @@ import { Button, TierBadge, AiosMark, KpiStat } from "@aios-alpha/ui";
 
 0.3.0 also adds a per-mode effects layer — card-glow shadows (`--aios-shadow-glow-card*` / `-featured*`) and liquid-glass tokens (`--aios-glass-*`, `--aios-blur-glass*`) — see the "0.3.0 — Effects layer" section in `DESIGN.md`.
 
-0.3.1 does not change token values. It aligns the packaged contract/version and narrows the
-consumer-colour exception policy. `@aios-alpha/ui@0.3.0` remains compatible and is not republished.
+0.3.1 does not change token values. It aligns both `@aios-alpha/design` and `@aios-alpha/ui` with
+the packaged contract version, makes the UI ESM entry directly importable by Node, and narrows the
+consumer-colour exception policy.
 
 ### Migrating from 0.1.x
 

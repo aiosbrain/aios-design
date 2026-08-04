@@ -22,5 +22,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Verify publish surface
+      - name: Verify Design publish surface
+        run: npm pack --dry-run
+      - name: Build UI package
+        working-directory: react
+        run: |
+          npm ci
+          npm run build
+          npm run check:exports
+      - name: Verify UI publish surface
+        working-directory: react
         run: npm pack --dry-run

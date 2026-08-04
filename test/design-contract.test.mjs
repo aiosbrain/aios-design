@@ -9,20 +9,27 @@ test("package, lockfile, and published contract identify the same patch", () => 
   const pkg = readJson("../package.json");
   const uiPkg = readJson("../react/package.json");
   const lock = readJson("../package-lock.json");
+  const uiLock = readJson("../react/package-lock.json");
   const contract = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
   const readme = readFileSync(new URL("../README.md", import.meta.url), "utf8");
   const contractVersion = contract.match(/^version:\s*([^\s]+)$/m)?.[1];
   assert.equal(pkg.version, "0.3.1");
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[""].version, pkg.version);
+  assert.equal(uiPkg.version, pkg.version);
+  assert.equal(uiLock.version, uiPkg.version);
+  assert.equal(uiLock.packages[""].version, uiPkg.version);
+  assert.equal(uiLock.packages[".."].version, pkg.version);
   assert.equal(contractVersion, pkg.version);
-  assert.match(readme, /@aios-alpha\/design@\^0\.3\.1 @aios-alpha\/ui@\^0\.3\.0/);
+  assert.match(readme, /@aios-alpha\/design@\^0\.3\.1 @aios-alpha\/ui@\^0\.3\.1/);
   assert.match(readme, /0\.3\.1 does not change token values/);
   assert.deepEqual(pkg.dependencies, {});
   assert.equal(pkg.devDependencies["style-dictionary"], "^5.4.4");
   assert.equal(lock.packages[""].devDependencies["style-dictionary"], "^5.4.4");
   assert.equal(pkg.repository.url, "https://github.com/aiosbrain/aios-design.git");
   assert.equal(uiPkg.repository.url, pkg.repository.url);
+  assert.equal(pkg.publishConfig.provenance, true);
+  assert.equal(uiPkg.publishConfig.provenance, true);
 });
 
 test("consumer exceptions stay narrow and shared token literals remain forbidden", () => {
@@ -51,8 +58,9 @@ test("the built stylesheet exposes every canonical light and dark color token", 
   }
 });
 
-test("the trusted-publishing workflow can publish Design without republishing UI", () => {
+test("the trusted-publishing workflow gates both aligned packages", () => {
   const workflow = readFileSync(new URL("../.github/workflows/publish.yml", import.meta.url), "utf8");
+  const ci = readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
   assert.match(workflow, /actions\/checkout@[0-9a-f]{40}/);
   assert.match(workflow, /actions\/setup-node@[0-9a-f]{40}/);
   assert.match(workflow, /npm install -g npm@11\.5\.1/);
@@ -62,6 +70,8 @@ test("the trusted-publishing workflow can publish Design without republishing UI
   assert.match(workflow, /if npm view "@aios-alpha\/design@\$VERSION" version[^]*?else\s+npm publish\s+fi/);
   assert.match(workflow, /if npm view "@aios-alpha\/ui@\$VERSION" version[^]*?else\s+npm publish\s+fi/);
   assert.equal((workflow.match(/^\s+npm publish$/gm) ?? []).length, 2);
+  assert.match(ci, /working-directory: react\s+run: \|\s+npm ci\s+npm run build\s+npm run check:exports/);
+  assert.match(ci, /Verify UI publish surface\s+working-directory: react\s+run: npm pack --dry-run/);
 });
 
 test("release tag verification fails closed and accepts only the package version", () => {

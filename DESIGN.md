@@ -144,6 +144,8 @@ Self-host via `@fontsource/instrument-serif`, `@fontsource/instrument-sans`, `@f
 
 ## Components (`@aios-alpha/ui`)
 
+Contract version 0.3.1 applies to both `@aios-alpha/design` and `@aios-alpha/ui`.
+
 - **Button (primary):** near-black/white pill, `rounded-full`, no glow.
 - **Button (secondary):** ghost pill, hairline `border-border`.
 - **EyebrowLabel:** uppercase mono, muted greyscale (not lime).
@@ -213,6 +215,8 @@ All are per-mode design-system tokens, so consumers get them for free. Compose p
 
 ## 0.3.1 — Consumer colour governance
 
+- Align both published package versions with this 0.3.1 contract.
+- Emit Node-resolvable ESM from `@aios-alpha/ui` and smoke-import its published entry in CI.
 - Shared semantic, surface, text, border, effect, and data-viz colours must reference the published
   `--aios-*` variables, including SVG and chart configuration.
 - The only consumer-owned raw colours are a named third-party/provider identity or a fixed,
