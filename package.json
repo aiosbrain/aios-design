@@ -9,7 +9,8 @@
     "url": "https://github.com/aiosbrain/aios-design.git"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "exports": {
     "./tokens.css": "./dist/tokens.css",
