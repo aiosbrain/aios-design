@@ -1,4 +1,7 @@
 node_modules/
+# also match a node_modules SYMLINK: the trailing-slash form above does not,
+# which is how a self-referential symlink got committed and broke `npm ci`.
+node_modules
 *.log
 .DS_Store
 
