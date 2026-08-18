@@ -1,7 +1,7 @@
 {
   "name": "@aios-alpha/design",
-  "version": "0.3.1",
-  "description": "AIOS unified design system — DTCG tokens, CSS variables, Tailwind v4 theme, and Pencil variables. Editorial Minimal direction: greyscale chrome, Instrument typography, colour rationed to badges and data viz.",
+  "version": "0.4.0",
+  "description": "AIOS unified design system — DTCG tokens, CSS variables, Tailwind v4 theme, Pencil variables, and the canonical brand assets (caret-A mark, wordmark, lockups). Editorial Minimal direction: greyscale chrome, Instrument typography, colour rationed to badges and data viz; the logo is monochrome by contract.",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -16,6 +16,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./tailwind-theme.css": "./dist/tailwind-theme.css",
     "./tokens.pencil.json": "./dist/tokens.pencil.json",
+    "./brand/*": "./dist/brand/*",
     "./DESIGN.md": "./DESIGN.md"
   },
   "files": [
@@ -25,8 +26,10 @@
   ],
   "scripts": {
     "build:tokens": "node build/build.mjs",
-    "test": "npm run build:tokens && node --test test/design-contract.test.mjs",
-    "prepare": "npm run build:tokens"
+    "build:brand": "node build/build-brand.mjs",
+    "build": "npm run build:tokens && npm run build:brand",
+    "test": "npm run build && node --test test/design-contract.test.mjs",
+    "prepare": "npm run build"
   },
   "dependencies": {},
   "devDependencies": {

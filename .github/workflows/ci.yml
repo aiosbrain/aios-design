@@ -22,6 +22,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Generated brand geometry is committed
+        # npm ci ran the brand build; if it moved caret-a-path.ts, the committed
+        # copy the React package compiles against had drifted from brand/src.
+        run: git diff --exit-code react/components/aios/caret-a-path.ts
       - name: Verify Design publish surface
         run: npm pack --dry-run
       - name: Build UI package
