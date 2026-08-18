@@ -38,7 +38,7 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 Install the Design contract patch with the compatible UI package:
 
 ```bash
-npm install @aios-alpha/design@^0.5.0 @aios-alpha/ui@^0.5.0
+npm install @aios-alpha/design@^1.0.0 @aios-alpha/ui@^1.0.0
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -143,3 +143,18 @@ Light is `:root`. `class="dark"` on `<html>` swaps color values; type, spacing, 
 ## Pencil prototyping
 
 `dist/tokens.pencil.json` holds flat token maps for the Pencil MCP `set_variables` call. See `PENCIL.md`.
+
+## License
+
+**Apache-2.0** — see [`LICENSE`](LICENSE) and [`LICENSING.md`](LICENSING.md).
+
+Permissive on purpose. This is meant to be embedded in your interfaces, including
+commercial and closed-source ones. Keep the license and copyright notices, state what you
+changed, and it's yours to use.
+
+Versions published before `1.0.0` were MIT and **remain MIT** — see
+[`LICENSE-MIT`](LICENSE-MIT) and [`CHANGELOG.md`](CHANGELOG.md). The relicense is
+going-forward only, and it ships as a major version precisely so it isn't a surprise.
+
+The AIOS server is AGPL-3.0 while this is Apache-2.0; that split is deliberate, and
+`LICENSING.md` explains it.

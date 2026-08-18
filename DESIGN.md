@@ -1,5 +1,5 @@
 ---
-version: 0.5.0
+version: 1.0.0
 name: AIOS Design System
 description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Includes the canonical brand assets: there is exactly one AIOS logo, its wordmark is never coloured, product UI renders it monochrome, and it ships from this package. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
 direction: Editorial Minimal

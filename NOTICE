@@ -1,0 +1,32 @@
+AIOS Design System
+Copyright (C) 2026 Chetan Nandakumar and John Ellison
+
+This software is licensed under the Apache License, Version 2.0. See LICENSE.
+
+Published to npm as:
+    @aios-alpha/design  — DTCG tokens, CSS variables, Tailwind theme, Pencil variables
+    @aios-alpha/ui      — React component library
+
+This file records third-party components carrying an attribution obligation. It is not a
+complete dependency list — see the package.json files and their lockfiles for that.
+
+
+Notable components
+------------------
+
+React — MIT License
+    https://github.com/facebook/react
+    A peer dependency of @aios-alpha/ui. Not bundled.
+
+Tailwind CSS — MIT License
+    https://github.com/tailwindlabs/tailwindcss
+    The token build emits a Tailwind v4 theme. Tailwind itself is not bundled.
+
+Vite, TypeScript, and the build toolchain — MIT / Apache-2.0
+    Development dependencies. Absent from the published packages.
+
+Build and development dependencies are permissive throughout (MIT / ISC / BSD /
+Apache-2.0). None carries a copyleft obligation, which is a property worth keeping: this
+package sits on the permissive side of an organization whose server code is AGPL, and a
+copyleft dependency arriving here would make its Apache grant undeliverable. See
+LICENSING.md.
