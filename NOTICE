@@ -3,6 +3,13 @@ Copyright (C) 2026 Chetan Nandakumar and John Ellison
 
 This software is licensed under the Apache License, Version 2.0. See LICENSE.
 
+The LICENSE file is the verbatim Apache text with a copyright line and nothing else, so
+that automated license detection recognises it; this NOTICE and LICENSING.md are where
+the rationale and any per-directory exceptions are recorded.
+
+Earlier releases were published under the MIT License, reproduced in LICENSE-MIT, and
+those releases remain available under those terms.
+
 Published to npm as:
     @aios-alpha/design  — DTCG tokens, CSS variables, Tailwind theme, Pencil variables
     @aios-alpha/ui      — React component library
