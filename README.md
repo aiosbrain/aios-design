@@ -38,7 +38,7 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 Install the Design contract patch with the compatible UI package:
 
 ```bash
-npm install @aios-alpha/design@^0.4.0 @aios-alpha/ui@^0.4.0
+npm install @aios-alpha/design@^0.5.0 @aios-alpha/ui@^0.5.0
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -79,14 +79,16 @@ import { Button, TierBadge, AiosLogo, AiosMark, KpiStat } from "@aios-alpha/ui";
 
 `aios-lockup.svg` (default) · `aios-lockup-stacked.svg` · `aios-mark.svg` · `aios-wordmark.svg`,
 each also as `-black.svg` / `-white.svg` for `<img>`, print, and video where `currentColor` cannot
-resolve. `aios-mark-prism.svg` is the gradient mark — bare mark only, ≥48px. Read `DESIGN.md`
+resolve. `aios-mark-prism.svg` is the gradient mark (≥48px), and `aios-lockup-display-white.svg` /
+`-black.svg` (plus the stacked pair) put that gradient mark beside a single-ink wordmark — **brand
+artwork only** (social cards, covers, decks, merch, video), never product UI. Read `DESIGN.md`
 § Brand & Logo before using any of them.
 
 **Astro / Starlight** — import `tokens.css` and map `--aios-*` onto Starlight's `--sl-*` (see `aios-website`).
 
 **Raw CSS (no Tailwind)** — import `tokens.css` and use `var(--aios-*)` directly.
 
-### Semantic tokens (0.4.0 contract; unchanged 0.3.0 token values)
+### Semantic tokens (0.5.0 contract; unchanged 0.3.0 token values)
 
 | Token | Use for |
 |-------|---------|
@@ -100,6 +102,27 @@ resolve. `aios-mark-prism.svg` is the gradient mark — bare mark only, ≥48px.
 0.3.1 does not change token values. It aligns both `@aios-alpha/design` and `@aios-alpha/ui` with
 the packaged contract version, makes the UI ESM entry directly importable by Node, and narrows the
 consumer-colour exception policy.
+
+### Upgrading from 0.3.x — one visual breaking change
+
+Token values, CSS variables, and the Tailwind bridge are **unchanged** across 0.4.0 and 0.5.0, so
+a stylesheet-only consumer upgrades with no work. The one break is in `@aios-alpha/ui`:
+
+- **`AiosMark` flipped its default in 0.4.0.** It used to render the prism gradient; it now renders
+  `currentColor`. Pass `prism` to get the gradient back. The old `mono` prop is accepted and
+  ignored, so `<AiosMark mono />` still renders correctly — but a bare `<AiosMark />` that used to
+  be colourful is now monochrome. **This changes rendered output without a type error**, so it will
+  not show up in a typecheck; look at the screen.
+- If you were loading `aios-mark-mono.svg` from a consuming repo's own assets, the canonical
+  equivalent is `@aios-alpha/design/brand/aios-mark.svg` (`currentColor`) or `aios-mark-white.svg`.
+
+If that monochrome mark is wrong for your surface, you are probably rendering brand artwork rather
+than UI — see the display lockup above.
+
+0.5.0 does not change token values. It splits the logo rule by context: product UI and chrome stay
+strictly monochrome, while brand artwork may use the new **display lockup** (prism mark + single-ink
+wordmark). The wordmark is never coloured in either context. See "0.5.0 — UI vs brand artwork" in
+`DESIGN.md`.
 
 0.4.0 does not change token values either. It gives the design system ownership of the logo:
 one monochrome lockup, published as `@aios-alpha/design/brand/*` and as `AiosLogo` in
