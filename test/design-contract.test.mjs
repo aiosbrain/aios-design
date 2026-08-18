@@ -13,7 +13,7 @@ test("package, lockfile, and published contract identify the same patch", () => 
   const contract = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
   const readme = readFileSync(new URL("../README.md", import.meta.url), "utf8");
   const contractVersion = contract.match(/^version:\s*([^\s]+)$/m)?.[1];
-  assert.equal(pkg.version, "0.5.0");
+  assert.equal(pkg.version, "1.0.0");
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[""].version, pkg.version);
   assert.equal(uiPkg.version, pkg.version);
@@ -21,8 +21,8 @@ test("package, lockfile, and published contract identify the same patch", () => 
   assert.equal(uiLock.packages[""].version, uiPkg.version);
   assert.equal(uiLock.packages[".."].version, pkg.version);
   assert.equal(contractVersion, pkg.version);
-  assert.match(readme, /@aios-alpha\/design@\^0\.5\.0 @aios-alpha\/ui@\^0\.5\.0/);
-  assert.match(readme, /0\.5\.0 does not change token values/);
+  assert.match(readme, /@aios-alpha\/design@\^1\.0\.0 @aios-alpha\/ui@\^1\.0\.0/);
+  assert.match(readme, /1\.0\.0 does not change token values/);
   assert.deepEqual(pkg.dependencies, {});
   assert.equal(pkg.devDependencies["style-dictionary"], "^5.4.4");
   assert.equal(lock.packages[""].devDependencies["style-dictionary"], "^5.4.4");
@@ -82,7 +82,7 @@ test("release tag verification fails closed and accepts only the package version
   });
   assert.notEqual(run("branch", "main").status, 0);
   assert.notEqual(run("tag", "v0.4.0").status, 0);
-  assert.equal(run("tag", "v0.5.0").status, 0);
+  assert.equal(run("tag", "v1.0.0").status, 0);
 });
 
 test("the brand contract stays monochrome and every asset is generated from one source", () => {

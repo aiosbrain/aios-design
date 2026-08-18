@@ -38,7 +38,7 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 Install the Design contract patch with the compatible UI package:
 
 ```bash
-npm install @aios-alpha/design@^0.5.0 @aios-alpha/ui@^0.5.0
+npm install @aios-alpha/design@^1.0.0 @aios-alpha/ui@^1.0.0
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -119,6 +119,11 @@ a stylesheet-only consumer upgrades with no work. The one break is in `@aios-alp
 If that monochrome mark is wrong for your surface, you are probably rendering brand artwork rather
 than UI — see the display lockup above.
 
+1.0.0 does not change token values, CSS variables, the Tailwind bridge, brand assets, or any
+component API. It relicenses the packages from MIT to Apache-2.0 and ships as a major version for
+that reason alone — see [`CHANGELOG.md`](CHANGELOG.md) and [`LICENSING.md`](LICENSING.md).
+Upgrading from 0.5.0 is a version-string change and nothing else.
+
 0.5.0 does not change token values. It splits the logo rule by context: product UI and chrome stay
 strictly monochrome, while brand artwork may use the new **display lockup** (prism mark + single-ink
 wordmark). The wordmark is never coloured in either context. See "0.5.0 — UI vs brand artwork" in
@@ -143,3 +148,18 @@ Light is `:root`. `class="dark"` on `<html>` swaps color values; type, spacing, 
 ## Pencil prototyping
 
 `dist/tokens.pencil.json` holds flat token maps for the Pencil MCP `set_variables` call. See `PENCIL.md`.
+
+## License
+
+**Apache-2.0** — see [`LICENSE`](LICENSE) and [`LICENSING.md`](LICENSING.md).
+
+Permissive on purpose. This is meant to be embedded in your interfaces, including
+commercial and closed-source ones. Keep the license and copyright notices, state what you
+changed, and it's yours to use.
+
+Versions published before `1.0.0` were MIT and **remain MIT** — see
+[`LICENSE-MIT`](LICENSE-MIT) and [`CHANGELOG.md`](CHANGELOG.md). The relicense is
+going-forward only, and it ships as a major version precisely so it isn't a surprise.
+
+The AIOS server is AGPL-3.0 while this is Apache-2.0; that split is deliberate, and
+`LICENSING.md` explains it.
