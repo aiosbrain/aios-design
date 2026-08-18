@@ -105,11 +105,17 @@ test("the brand contract stays monochrome and every asset is generated from one 
     assert.match(readFileSync(new URL(`${name}-white.svg`, brandDir), "utf8"), /#ffffff/);
   }
 
-  // The gradient exists in exactly one place: the bare mark.
-  const prism = readFileSync(new URL("aios-mark-prism.svg", brandDir), "utf8");
-  assert.match(prism, /#8b5cf6[^]*#10b981[^]*#84cc16/);
-  assert.doesNotMatch(prism, /translate/, "the prism asset is the bare mark — no lockup composition");
-  assert.equal(readdirSync(brandDir).filter((f) => f.includes("prism")).length, 1);
+  // The gradient exists on exactly two assets, and both are the bare mark: the raw
+  // prism mark and the square app icon. A gradient lockup must never appear here.
+  const gradientAssets = readdirSync(brandDir).filter((f) =>
+    readFileSync(new URL(f, brandDir), "utf8").includes("linearGradient"),
+  );
+  assert.deepEqual(gradientAssets.sort(), ["aios-app-icon.svg", "aios-mark-prism.svg"]);
+  for (const name of gradientAssets) {
+    const svg = readFileSync(new URL(name, brandDir), "utf8");
+    assert.match(svg, /#8b5cf6[^]*#10b981[^]*#84cc16/);
+    assert.equal((svg.match(/<path/g) ?? []).length, 1, `${name} must be the bare mark, not a lockup`);
+  }
 
   // The React component and the SVG assets must be built from the same geometry.
   const generated = readFileSync(new URL("../react/components/aios/caret-a-path.ts", import.meta.url), "utf8");

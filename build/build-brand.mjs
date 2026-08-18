@@ -6,6 +6,8 @@
 //   dist/brand/aios-wordmark.svg        "AIOS" outlines, currentColor
 //   dist/brand/aios-lockup.svg          mark + wordmark, horizontal, currentColor
 //   dist/brand/aios-lockup-stacked.svg  mark over wordmark, currentColor
+//   dist/brand/aios-app-icon.svg        square canvas, prism mark — favicons + app icons
+//   dist/brand/aios-app-icon-mono.svg   square canvas, currentColor mark
 // Each currentColor asset also ships -black (#0a0a0a) and -white (#ffffff) ink
 // variants, because `currentColor` does not inherit through <img>, CSS
 // background-image, or any non-web consumer (video editors, print, merch).
@@ -170,6 +172,44 @@ writeMono(
     <path transform="translate(${round(markX - MARK_INK.x0 * stackMarkScale)} ${round(-MARK_INK.y0 * stackMarkScale)}) scale(${round(stackMarkScale)})" d="${mark.path}"/>
     <path transform="translate(${round(wordX)} ${round(baseline)})" d="${word.path}"/>
   </g>`,
+    }),
+  );
+}
+
+// --- App icon -----------------------------------------------------------------
+// Favicons and OS app icons need a square canvas with breathing room, not the tight
+// ink crop the other assets use. One canonical square so no surface invents its own.
+{
+  const BOX = 1000;
+  const INSET = 0.68; // mark ink occupies 68% of the square's larger dimension
+  const scale = (INSET * BOX) / Math.max(markW, markH);
+  const tx = (BOX - markW * scale) / 2 - MARK_INK.x0 * scale;
+  const ty = (BOX - markH * scale) / 2 - MARK_INK.y0 * scale;
+  const transform = `translate(${round(tx)} ${round(ty)}) scale(${round(scale)})`;
+
+  write(
+    'aios-app-icon.svg',
+    svg({
+      viewBox: `0 0 ${BOX} ${BOX}`,
+      width: BOX,
+      height: BOX,
+      label: 'AIOS',
+      body: `  <defs>
+    <linearGradient id="aios-prism" x1="0" y1="0" x2="1" y2="0">
+${PRISM.map(([o, c]) => `      <stop offset="${o}" stop-color="${c}"/>`).join('\n')}
+    </linearGradient>
+  </defs>
+  <path fill="url(#aios-prism)" transform="${transform}" d="${mark.path}"/>`,
+    }),
+  );
+  writeMono(
+    'aios-app-icon-mono',
+    svg({
+      viewBox: `0 0 ${BOX} ${BOX}`,
+      width: BOX,
+      height: BOX,
+      label: 'AIOS',
+      body: `  <path fill="currentColor" transform="${transform}" d="${mark.path}"/>`,
     }),
   );
 }
