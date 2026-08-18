@@ -1,7 +1,7 @@
 ---
-version: 0.4.0
+version: 0.5.0
 name: AIOS Design System
-description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Includes the canonical brand assets: there is exactly one AIOS logo, it is monochrome, and it ships from this package. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
+description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Includes the canonical brand assets: there is exactly one AIOS logo, its wordmark is never coloured, product UI renders it monochrome, and it ships from this package. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
 direction: Editorial Minimal
 modes:
   default-per-surface:
@@ -96,13 +96,15 @@ effects:
 logo:
   mark: caret-A ("prism caret") — the only AIOS symbol
   wordmark: "AIOS" set in Instrument Sans 600, tracking 0.01em, outlined
-  rule: every lockup is single-colour. The prism gradient is allowed on the bare mark only.
+  rule: the wordmark is never coloured. In product UI and chrome the whole lockup is single-colour; brand artwork may use the display lockup, where the prism gradient sits on the mark beside a single-ink wordmark.
   assets:
     "@aios-alpha/design/brand/aios-lockup.svg": horizontal mark + wordmark, currentColor — the default
     "@aios-alpha/design/brand/aios-lockup-stacked.svg": stacked mark over wordmark, currentColor
     "@aios-alpha/design/brand/aios-mark.svg": bare mark, currentColor
     "@aios-alpha/design/brand/aios-wordmark.svg": bare wordmark, currentColor
-    "@aios-alpha/design/brand/aios-mark-prism.svg": bare mark, prism gradient — the one sanctioned colour use
+    "@aios-alpha/design/brand/aios-lockup-display-white.svg": prism mark + white wordmark — BRAND ARTWORK ONLY, never UI
+    "@aios-alpha/design/brand/aios-lockup-stacked-display-white.svg": same, stacked (both also ship -black)
+    "@aios-alpha/design/brand/aios-mark-prism.svg": bare mark, prism gradient
     "@aios-alpha/design/brand/aios-app-icon.svg": square canvas, prism mark, 68% inset — favicons and app icons
     ink-variants: every currentColor asset also ships -black.svg (#0a0a0a) and -white.svg (#ffffff) for <img>, print, and video
   metrics:
@@ -112,6 +114,7 @@ logo:
     min-size: lockup 96px wide; bare mark 16px; prism mark 48px in layout (aios-app-icon.svg exempt)
   retired:
     - multicolour wordmark (gradient A + lime I + white OS) — removed in 0.4.0, never reinstate
+    - any coloured wordmark, including a wordmark inheriting a framework accent colour
     - hand-drawn stroked chevron — never matched the mark geometry
     - solid triangle favicon — not the caret-A
     - refracting-prism / rainbow-beam app icon — a different symbol entirely
@@ -200,7 +203,9 @@ and every social card use the same lockup in a single ink colour. This section i
 | `aios-lockup-stacked.svg` | Square-ish canvases — social cards, cover images, merch, title cards. |
 | `aios-mark.svg` | The symbol alone where "AIOS" is already stated in adjacent type. |
 | `aios-wordmark.svg` | Rare. Only where the mark is separately present in the same field of view. |
-| `aios-mark-prism.svg` | The single sanctioned colour treatment — see below. |
+| `aios-mark-prism.svg` | The bare mark in the prism gradient, ≥48px. |
+| `aios-lockup-display-white.svg` / `-black.svg` | **Brand artwork only.** Prism mark + single-ink wordmark. Never in UI. |
+| `aios-lockup-stacked-display-white.svg` / `-black.svg` | Same, stacked — covers and square social art. |
 | `aios-app-icon.svg` | Square canvas, prism mark, 68% inset. Favicons and OS app icons. `-mono` variant for single-colour contexts. |
 
 Every one of these is `currentColor`, so it inherits ink from its context and flips with the
@@ -208,12 +213,28 @@ theme for free. `currentColor` does **not** resolve through `<img>`, CSS `backgr
 video editor, or a print RIP — for those, use the `-black.svg` / `-white.svg` ink variants that
 ship alongside each file. Inline the SVG or use it as a CSS mask when you want theme inheritance.
 
-### The prism gradient
+### The prism gradient — two contexts
 
-`linear-gradient(#8b5cf6 → #10b981 → #84cc16)` is allowed on the **bare mark only**, at **48px or
-larger**, as a standalone moment: merch, a hero or video sting. Favicons and OS app icons are the
-one exemption from the 48px floor — use `aios-app-icon.svg`, whose inset is drawn for small
-raster sizes, and let the platform pick the pixel size. It is never
+**The wordmark is never coloured.** That part is absolute and has no exceptions. What changes
+between contexts is the *mark*.
+
+**Product UI and chrome — strictly monochrome.** Nav bars, sidebars, headers, footers, app
+shells, docs, the marketing site. The whole lockup is one ink. Interfaces should read light and
+quiet; a gradient in the corner of a sidebar is decoration competing with the content, and at
+UI sizes (16–24px) the gradient turns to mud anyway. Use `aios-lockup.svg` and friends.
+
+**Brand artwork — the display lockup is allowed.** Social/OG cards, event and post covers, title
+cards, decks, merch, video stings: artwork whose *subject* is the brand, usually on a plate of
+solid colour. Here the mark may carry the prism gradient beside a single-ink wordmark —
+`aios-lockup-display-white.svg` / `-black.svg`, and the stacked pair. On a black field this reads
+as the brand rather than as UI furniture, which is the whole point.
+
+The test is not "how big is it" but **"is the logo the subject, or is it the label on a tool?"**
+If a user is trying to get work done past it, it's UI: monochrome.
+
+The **bare** mark in gradient (`aios-mark-prism.svg`) still wants **48px or larger** — below that
+the three stops collapse. Favicons and OS app icons are the one exemption: use
+`aios-app-icon.svg`, whose inset is drawn for small raster sizes, and let the platform pick. It is never
 combined with the wordmark, never applied to letterforms, and there is deliberately no gradient
 lockup asset for you to reach for. Everywhere else the gradient is an ambient background effect
 (blurred glow), not ink.
@@ -228,11 +249,18 @@ which you should not be doing.
 - **Clear space** — one mark ink height on all four sides. Nothing enters it.
 - **Minimum size** — lockup `96px` wide; bare mark `16px`; prism mark `48px` in layout
   (`aios-app-icon.svg` is exempt — it is drawn for favicon and OS-icon raster sizes).
+- **Collapsed navigation** — when a sidebar or nav collapses, drop to the bare mark in
+  `currentColor`. Never a cropped lockup, never a gradient at that size.
 
 ### Never
 
-- Never recolour the wordmark, per-letter or otherwise. The gradient-A / lime-I / white-OS
-  wordmark is **retired**; it does not come back.
+- Never recolour the wordmark, per-letter or otherwise, in any context. The gradient-A / lime-I /
+  white-OS wordmark is **retired**; it does not come back.
+- Never let the wordmark inherit a framework accent colour. Starlight's `--sl-color-text-accent`
+  shipped a violet wordmark to production this way — no line in the repo authored it, so grep
+  could not find it. Pin brand ink explicitly.
+- Never use a display lockup in product UI, and never ship one from `@aios-alpha/ui` — the
+  component library is for interfaces, and interfaces are monochrome. It is assets-only on purpose.
 - Never redraw the mark. Reach for `dist/brand/`, or `AiosMark` / `AiosLogo` from `@aios-alpha/ui`.
 - Never set the wordmark in Instrument Serif, or in any face other than Instrument Sans 600.
 - Never place the lockup on a busy image without a solid or scrimmed plate behind it.
@@ -338,3 +366,25 @@ multicolour wordmark that fought the Editorial Minimal chrome everywhere it appe
 - **Prism gradient is bare-mark-only**, ≥48px. No gradient lockup asset exists.
 - **Retired:** the multicolour wordmark, the hand-drawn stroked chevron, the solid-triangle
   favicon, and the refracting-prism app icon. Token values are unchanged in 0.4.0.
+
+---
+
+## 0.5.0 — UI vs brand artwork
+
+0.4.0 made every lockup monochrome everywhere. That was right for interfaces and too strict for
+artwork: on a solid black cover or a shared-link card, where the logo *is* the subject, the flat
+white lockup reads as a placeholder rather than a brand.
+
+- **New: the display lockup.** `aios-lockup-display-white.svg` / `-black.svg` and the stacked
+  pair — prism mark, single-ink wordmark. **Brand artwork only**: social/OG cards, covers, title
+  cards, decks, merch, video.
+- **Product UI and chrome stay strictly monochrome.** Unchanged, and now stated as a context
+  rather than a size rule. The dividing question is whether the logo is the subject or the label
+  on a tool the user is working past.
+- **The wordmark is still never coloured** — in either context. That rule has no exceptions, and
+  now explicitly covers inheriting a framework accent.
+- **Collapsed nav** drops to the bare mark in `currentColor`.
+- Deliberately **not** exposed through `@aios-alpha/ui`: the component library builds interfaces,
+  and interfaces are monochrome, so the display lockup is assets-only.
+
+Token values are unchanged.

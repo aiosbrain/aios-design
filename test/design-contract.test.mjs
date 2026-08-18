@@ -13,7 +13,7 @@ test("package, lockfile, and published contract identify the same patch", () => 
   const contract = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
   const readme = readFileSync(new URL("../README.md", import.meta.url), "utf8");
   const contractVersion = contract.match(/^version:\s*([^\s]+)$/m)?.[1];
-  assert.equal(pkg.version, "0.4.0");
+  assert.equal(pkg.version, "0.5.0");
   assert.equal(lock.version, pkg.version);
   assert.equal(lock.packages[""].version, pkg.version);
   assert.equal(uiPkg.version, pkg.version);
@@ -21,8 +21,8 @@ test("package, lockfile, and published contract identify the same patch", () => 
   assert.equal(uiLock.packages[""].version, uiPkg.version);
   assert.equal(uiLock.packages[".."].version, pkg.version);
   assert.equal(contractVersion, pkg.version);
-  assert.match(readme, /@aios-alpha\/design@\^0\.4\.0 @aios-alpha\/ui@\^0\.4\.0/);
-  assert.match(readme, /0\.4\.0 does not change token values/);
+  assert.match(readme, /@aios-alpha\/design@\^0\.5\.0 @aios-alpha\/ui@\^0\.5\.0/);
+  assert.match(readme, /0\.5\.0 does not change token values/);
   assert.deepEqual(pkg.dependencies, {});
   assert.equal(pkg.devDependencies["style-dictionary"], "^5.4.4");
   assert.equal(lock.packages[""].devDependencies["style-dictionary"], "^5.4.4");
@@ -81,14 +81,15 @@ test("release tag verification fails closed and accepts only the package version
     encoding: "utf8",
   });
   assert.notEqual(run("branch", "main").status, 0);
-  assert.notEqual(run("tag", "v0.3.1").status, 0);
-  assert.equal(run("tag", "v0.4.0").status, 0);
+  assert.notEqual(run("tag", "v0.4.0").status, 0);
+  assert.equal(run("tag", "v0.5.0").status, 0);
 });
 
 test("the brand contract stays monochrome and every asset is generated from one source", () => {
   const contract = readFileSync(new URL("../DESIGN.md", import.meta.url), "utf8");
   assert.match(contract, /^## Brand & Logo$/m, "the logo contract must stay in DESIGN.md");
-  assert.match(contract, /allowed on the \*\*bare mark only\*\*/);
+  assert.match(contract, /\*\*The wordmark is never coloured\.\*\*/);
+  assert.match(contract, /Product UI and chrome — strictly monochrome/);
 
   const brandDir = new URL("../dist/brand/", import.meta.url);
   const mono = ["aios-mark", "aios-wordmark", "aios-lockup", "aios-lockup-stacked"];
@@ -105,17 +106,42 @@ test("the brand contract stays monochrome and every asset is generated from one 
     assert.match(readFileSync(new URL(`${name}-white.svg`, brandDir), "utf8"), /#ffffff/);
   }
 
-  // The gradient exists on exactly two assets, and both are the bare mark: the raw
-  // prism mark and the square app icon. A gradient lockup must never appear here.
+  // The gradient appears on exactly these assets and no others: the bare prism mark,
+  // the square app icon, and the four display lockups. Anything else acquiring a
+  // gradient means a coloured logo leaked into a set that UI consumes.
   const gradientAssets = readdirSync(brandDir).filter((f) =>
     readFileSync(new URL(f, brandDir), "utf8").includes("linearGradient"),
   );
-  assert.deepEqual(gradientAssets.sort(), ["aios-app-icon.svg", "aios-mark-prism.svg"]);
+  assert.deepEqual(gradientAssets.sort(), [
+    "aios-app-icon.svg",
+    "aios-lockup-display-black.svg",
+    "aios-lockup-display-white.svg",
+    "aios-lockup-stacked-display-black.svg",
+    "aios-lockup-stacked-display-white.svg",
+    "aios-mark-prism.svg",
+  ]);
   for (const name of gradientAssets) {
     const svg = readFileSync(new URL(name, brandDir), "utf8");
     assert.match(svg, /#8b5cf6[^]*#10b981[^]*#84cc16/);
-    assert.equal((svg.match(/<path/g) ?? []).length, 1, `${name} must be the bare mark, not a lockup`);
+    const paths = (svg.match(/<path/g) ?? []).length;
+    assert.equal(paths, name.includes("display") ? 2 : 1, `${name} has an unexpected path count`);
   }
+
+  // The display lockups are the ONE place a gradient sits beside the wordmark — and the
+  // wordmark itself must still be a single flat ink. A gradient-filled wordmark is the
+  // exact treatment 0.4.0 retired, so assert it cannot come back through this door.
+  for (const variant of ["", "-stacked"]) {
+    for (const [ink, hex] of [["white", "#ffffff"], ["black", "#0a0a0a"]]) {
+      const svg = readFileSync(new URL(`aios-lockup${variant}-display-${ink}.svg`, brandDir), "utf8");
+      const fills = [...svg.matchAll(/<path fill="([^"]+)"/g)].map((m) => m[1]);
+      assert.deepEqual(fills, ["url(#aios-prism)", hex], `display${variant}/${ink}: mark gradient, wordmark flat ink`);
+    }
+  }
+
+  // The display lockup must never reach the component library — @aios-alpha/ui builds
+  // interfaces, and interfaces are monochrome (DESIGN.md 0.5.0).
+  const uiIndex = readFileSync(new URL("../react/index.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(uiIndex, /display/i, "the display lockup is assets-only on purpose");
 
   // The React component and the SVG assets must be built from the same geometry.
   const generated = readFileSync(new URL("../react/components/aios/caret-a-path.ts", import.meta.url), "utf8");

@@ -6,15 +6,19 @@
 //   dist/brand/aios-wordmark.svg        "AIOS" outlines, currentColor
 //   dist/brand/aios-lockup.svg          mark + wordmark, horizontal, currentColor
 //   dist/brand/aios-lockup-stacked.svg  mark over wordmark, currentColor
+//   dist/brand/aios-lockup-display-*.svg         prism mark + ink wordmark — BRAND ARTWORK ONLY
+//   dist/brand/aios-lockup-stacked-display-*.svg  same, stacked
 //   dist/brand/aios-app-icon.svg        square canvas, prism mark — favicons + app icons
 //   dist/brand/aios-app-icon-mono.svg   square canvas, currentColor mark
 // Each currentColor asset also ships -black (#0a0a0a) and -white (#ffffff) ink
 // variants, because `currentColor` does not inherit through <img>, CSS
 // background-image, or any non-web consumer (video editors, print, merch).
 //
-// Every lockup is single-colour by contract (DESIGN.md § Brand & Logo). There is
-// deliberately no gradient lockup and no gradient wordmark — the gradient is only
-// ever allowed on the bare mark.
+// The wordmark is NEVER coloured — that part is absolute. What varies is the mark:
+// in product UI and chrome the whole lockup is single-colour, while brand artwork
+// (social cards, covers, title cards, merch, video) may use the "display" lockup,
+// where the mark carries the prism gradient beside a single-ink wordmark.
+// See DESIGN.md § Brand & Logo for which context is which.
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -54,6 +58,17 @@ const PRISM = [
   ['0.5', '#10b981'],
   ['1', '#84cc16'],
 ];
+
+/** The prism gradient def, scoped to a unique id so two inlined assets can't clash. */
+const prismDefs = (id) => `  <defs>
+    <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0">
+${PRISM.map(([o, c]) => `      <stop offset="${o}" stop-color="${c}"/>`).join('\n')}
+    </linearGradient>
+  </defs>`;
+
+// Brand artwork sits on a fixed dark or light plate, so the display lockup ships with
+// its wordmark ink baked in rather than as currentColor — there is no theme to inherit.
+const DISPLAY_INKS = { white: '#ffffff', black: '#0a0a0a' };
 
 const round = (n) => Number(n.toFixed(2));
 
@@ -97,11 +112,7 @@ write(
     width: round(markW),
     height: round(markH),
     label: 'AIOS',
-    body: `  <defs>
-    <linearGradient id="aios-prism" x1="0" y1="0" x2="1" y2="0">
-${PRISM.map(([o, c]) => `      <stop offset="${o}" stop-color="${c}"/>`).join('\n')}
-    </linearGradient>
-  </defs>
+    body: `${prismDefs('aios-prism')}
   <path fill="url(#aios-prism)" d="${mark.path}"/>`,
   }),
 );
@@ -145,6 +156,22 @@ writeMono(
   </g>`,
     }),
   );
+
+  // Display lockup — prism mark, single-ink wordmark. Brand artwork only.
+  for (const [variant, ink] of Object.entries(DISPLAY_INKS)) {
+    write(
+      `aios-lockup-display-${variant}.svg`,
+      svg({
+        viewBox: `0 ${round(y0)} ${round(w)} ${round(y1 - y0)}`,
+        width: round(w),
+        height: round(y1 - y0),
+        label: 'AIOS',
+        body: `${prismDefs('aios-prism')}
+  <path fill="url(#aios-prism)" transform="translate(${round(markTx)} ${round(markTy)}) scale(${round(markScale)})" d="${mark.path}"/>
+  <path fill="${ink}" transform="translate(${round(wordDx)} 0)" d="${word.path}"/>`,
+      }),
+    );
+  }
 }
 
 // --- Stacked lockup -----------------------------------------------------------
@@ -174,6 +201,22 @@ writeMono(
   </g>`,
     }),
   );
+
+  // Display lockup — prism mark, single-ink wordmark. Brand artwork only.
+  for (const [variant, ink] of Object.entries(DISPLAY_INKS)) {
+    write(
+      `aios-lockup-stacked-display-${variant}.svg`,
+      svg({
+        viewBox: `0 0 ${round(w)} ${round(baseline + WORD_INK.y1)}`,
+        width: round(w),
+        height: round(baseline + WORD_INK.y1),
+        label: 'AIOS',
+        body: `${prismDefs('aios-prism')}
+  <path fill="url(#aios-prism)" transform="translate(${round(markX - MARK_INK.x0 * stackMarkScale)} ${round(-MARK_INK.y0 * stackMarkScale)}) scale(${round(stackMarkScale)})" d="${mark.path}"/>
+  <path fill="${ink}" transform="translate(${round(wordX)} ${round(baseline)})" d="${word.path}"/>`,
+      }),
+    );
+  }
 }
 
 // --- App icon -----------------------------------------------------------------
@@ -194,11 +237,7 @@ writeMono(
       width: BOX,
       height: BOX,
       label: 'AIOS',
-      body: `  <defs>
-    <linearGradient id="aios-prism" x1="0" y1="0" x2="1" y2="0">
-${PRISM.map(([o, c]) => `      <stop offset="${o}" stop-color="${c}"/>`).join('\n')}
-    </linearGradient>
-  </defs>
+      body: `${prismDefs('aios-prism')}
   <path fill="url(#aios-prism)" transform="${transform}" d="${mark.path}"/>`,
     }),
   );

@@ -38,7 +38,7 @@ cd react && npm install && npm run build   # compiles @aios-alpha/ui to react/di
 Install the Design contract patch with the compatible UI package:
 
 ```bash
-npm install @aios-alpha/design@^0.4.0 @aios-alpha/ui@^0.4.0
+npm install @aios-alpha/design@^0.5.0 @aios-alpha/ui@^0.5.0
 ```
 
 **Tailwind v4 app** — global stylesheet, **in this order**:
@@ -79,14 +79,16 @@ import { Button, TierBadge, AiosLogo, AiosMark, KpiStat } from "@aios-alpha/ui";
 
 `aios-lockup.svg` (default) · `aios-lockup-stacked.svg` · `aios-mark.svg` · `aios-wordmark.svg`,
 each also as `-black.svg` / `-white.svg` for `<img>`, print, and video where `currentColor` cannot
-resolve. `aios-mark-prism.svg` is the gradient mark — bare mark only, ≥48px. Read `DESIGN.md`
+resolve. `aios-mark-prism.svg` is the gradient mark (≥48px), and `aios-lockup-display-white.svg` /
+`-black.svg` (plus the stacked pair) put that gradient mark beside a single-ink wordmark — **brand
+artwork only** (social cards, covers, decks, merch, video), never product UI. Read `DESIGN.md`
 § Brand & Logo before using any of them.
 
 **Astro / Starlight** — import `tokens.css` and map `--aios-*` onto Starlight's `--sl-*` (see `aios-website`).
 
 **Raw CSS (no Tailwind)** — import `tokens.css` and use `var(--aios-*)` directly.
 
-### Semantic tokens (0.4.0 contract; unchanged 0.3.0 token values)
+### Semantic tokens (0.5.0 contract; unchanged 0.3.0 token values)
 
 | Token | Use for |
 |-------|---------|
@@ -100,6 +102,11 @@ resolve. `aios-mark-prism.svg` is the gradient mark — bare mark only, ≥48px.
 0.3.1 does not change token values. It aligns both `@aios-alpha/design` and `@aios-alpha/ui` with
 the packaged contract version, makes the UI ESM entry directly importable by Node, and narrows the
 consumer-colour exception policy.
+
+0.5.0 does not change token values. It splits the logo rule by context: product UI and chrome stay
+strictly monochrome, while brand artwork may use the new **display lockup** (prism mark + single-ink
+wordmark). The wordmark is never coloured in either context. See "0.5.0 — UI vs brand artwork" in
+`DESIGN.md`.
 
 0.4.0 does not change token values either. It gives the design system ownership of the logo:
 one monochrome lockup, published as `@aios-alpha/design/brand/*` and as `AiosLogo` in
