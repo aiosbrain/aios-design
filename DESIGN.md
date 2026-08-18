@@ -1,7 +1,7 @@
 ---
-version: 0.3.1
+version: 0.4.0
 name: AIOS Design System
-description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
+description: The one design system for every AIOS surface — website, team brain, workspace GUI, and every scaffolded workspace. Includes the canonical brand assets: there is exactly one AIOS logo, it is monochrome, and it ships from this package. Dual-mode (light + dark). Editorial Minimal direction — greyscale chrome, Instrument typography, colour rationed to badges and data viz. Source of truth for tokens lives in tokens/*.json; this file is the human- and agent-readable contract.
 direction: Editorial Minimal
 modes:
   default-per-surface:
@@ -93,6 +93,27 @@ effects:
   glow-violet: "0 0 60px rgba(139, 92, 246, 0.3)"
   glow-lime: "0 0 60px rgba(132, 204, 22, 0.3)"
   glass: "backdrop-filter: blur(12px)"
+logo:
+  mark: caret-A ("prism caret") — the only AIOS symbol
+  wordmark: "AIOS" set in Instrument Sans 600, tracking 0.01em, outlined
+  rule: every lockup is single-colour. The prism gradient is allowed on the bare mark only.
+  assets:
+    "@aios-alpha/design/brand/aios-lockup.svg": horizontal mark + wordmark, currentColor — the default
+    "@aios-alpha/design/brand/aios-lockup-stacked.svg": stacked mark over wordmark, currentColor
+    "@aios-alpha/design/brand/aios-mark.svg": bare mark, currentColor
+    "@aios-alpha/design/brand/aios-wordmark.svg": bare wordmark, currentColor
+    "@aios-alpha/design/brand/aios-mark-prism.svg": bare mark, prism gradient — the one sanctioned colour use
+    ink-variants: every currentColor asset also ships -black.svg (#0a0a0a) and -white.svg (#ffffff) for <img>, print, and video
+  metrics:
+    mark-height: 1.30 x wordmark cap height (horizontal lockup); 1.55 x (stacked)
+    gap: 0.78 x cap height (horizontal); 0.52 x cap height (stacked)
+    clear-space: 1 x mark ink height on all four sides
+    min-size: lockup 96px wide; bare mark 16px; prism mark 48px
+  retired:
+    - multicolour wordmark (gradient A + lime I + white OS) — removed in 0.4.0, never reinstate
+    - hand-drawn stroked chevron — never matched the mark geometry
+    - solid triangle favicon — not the caret-A
+    - refracting-prism / rainbow-beam app icon — a different symbol entirely
 gradients:
   primary: "linear-gradient(135deg, #8b5cf6 0%, #84cc16 100%)"
   prism: "linear-gradient(135deg, #8b5cf6 0%, #10b981 50%, #84cc16 100%)"
@@ -100,7 +121,7 @@ gradients:
 
 ## Overview
 
-**Editorial Minimal** — greyscale canvas, Instrument Serif display + Instrument Sans body, near-black/white pill primary buttons, colour rationed to badges, KPI sparklines, and the prism mark. Dual-mode with a matte dark palette (`#0b0b0b → #131313 → #191919`).
+**Editorial Minimal** — greyscale canvas, Instrument Serif display + Instrument Sans body, near-black/white pill primary buttons, colour rationed to badges, KPI sparklines, and the bare prism mark. Dual-mode with a matte dark palette (`#0b0b0b → #131313 → #191919`).
 
 **Personality:** editorial restraint · practitioner-built · developer-first · quietly confident.
 
@@ -144,15 +165,81 @@ Self-host via `@fontsource/instrument-serif`, `@fontsource/instrument-sans`, `@f
 
 ## Components (`@aios-alpha/ui`)
 
-Contract version 0.3.1 applies to both `@aios-alpha/design` and `@aios-alpha/ui`.
+Contract version 0.4.0 applies to both `@aios-alpha/design` and `@aios-alpha/ui`.
 
 - **Button (primary):** near-black/white pill, `rounded-full`, no glow.
 - **Button (secondary):** ghost pill, hairline `border-border`.
 - **EyebrowLabel:** uppercase mono, muted greyscale (not lime).
 - **StatCluster / KpiStat:** serif values, mono muted labels; colour only in KPI sparkline + delta.
 - **TierBadge / KindBadge:** violet/cyan/emerald/amber/fuchsia semantics via dedicated accent tokens — never `primary`.
-- **AiosMark:** prism caret-A SVG; `mono` prop for `currentColor`.
+- **AiosMark:** the caret-A symbol. Defaults to `currentColor`; `prism` renders the gradient (bare mark only).
+- **AiosLogo:** the canonical lockup (mark + wordmark) in `currentColor`. `stacked` and `markOnly` variants. This is what chrome should render — never a hand-assembled mark-plus-text.
 - **TerminalFrame:** mono code block, lime live dot when `status="live"`.
+
+---
+
+## Brand & Logo
+
+There is **one** AIOS logo and it is **monochrome**. Chrome, documents, slides, video, merch,
+and every social card use the same lockup in a single ink colour. This section is the contract;
+`dist/brand/*` is the only sanctioned source of the artwork.
+
+### The two elements
+
+- **The mark** — the caret-A ("prism caret"). The only AIOS symbol. No triangle, no refracting
+  prism, no rainbow beams, no hand-drawn chevron.
+- **The wordmark** — the literal string `AIOS` set in **Instrument Sans 600**, tracking `0.01em`,
+  converted to outlines. It is plain type, not custom letterforms, and it is never multicoloured.
+
+### Lockups
+
+| Asset | Use |
+|---|---|
+| `aios-lockup.svg` | **Default.** Nav bars, footers, headers, README, slide masters, video lower-thirds. |
+| `aios-lockup-stacked.svg` | Square-ish canvases — social cards, cover images, merch, title cards. |
+| `aios-mark.svg` | The symbol alone where "AIOS" is already stated in adjacent type. |
+| `aios-wordmark.svg` | Rare. Only where the mark is separately present in the same field of view. |
+| `aios-mark-prism.svg` | The single sanctioned colour treatment — see below. |
+
+Every one of these is `currentColor`, so it inherits ink from its context and flips with the
+theme for free. `currentColor` does **not** resolve through `<img>`, CSS `background-image`, a
+video editor, or a print RIP — for those, use the `-black.svg` / `-white.svg` ink variants that
+ship alongside each file. Inline the SVG or use it as a CSS mask when you want theme inheritance.
+
+### The prism gradient
+
+`linear-gradient(#8b5cf6 → #10b981 → #84cc16)` is allowed on the **bare mark only**, at **48px or
+larger**, as a standalone moment: favicon, app icon, merch, a hero or video sting. It is never
+combined with the wordmark, never applied to letterforms, and there is deliberately no gradient
+lockup asset for you to reach for. Everywhere else the gradient is an ambient background effect
+(blurred glow), not ink.
+
+### Metrics
+
+Baked into the generated assets — restate them only if you are rebuilding a lockup by hand,
+which you should not be doing.
+
+- **Mark height** — `1.30 x` wordmark cap height (horizontal), `1.55 x` (stacked).
+- **Gap** — `0.78 x` cap height (horizontal), `0.52 x` cap height (stacked).
+- **Clear space** — one mark ink height on all four sides. Nothing enters it.
+- **Minimum size** — lockup `96px` wide; bare mark `16px`; prism mark `48px`.
+
+### Never
+
+- Never recolour the wordmark, per-letter or otherwise. The gradient-A / lime-I / white-OS
+  wordmark is **retired**; it does not come back.
+- Never redraw the mark. Reach for `dist/brand/`, or `AiosMark` / `AiosLogo` from `@aios-alpha/ui`.
+- Never set the wordmark in Instrument Serif, or in any face other than Instrument Sans 600.
+- Never place the lockup on a busy image without a solid or scrimmed plate behind it.
+- Never add a glow, drop shadow, outline, or stroke to any brand asset.
+- Never hand-edit `dist/brand/*` — run `npm run build:brand`.
+
+### Regenerating
+
+`brand/src/*.json` holds the geometry (mark outline, wordmark outline). `build/build-brand.mjs`
+derives every asset from it. The wordmark outline itself comes from
+`build/gen-wordmark-path.py`, a one-shot tool re-run only if the typeface, weight, or tracking
+above changes.
 
 ---
 
@@ -190,14 +277,17 @@ border, or effect literals.
 **Do**
 - Ship both modes; toggle with `class="dark"` on `<html>`.
 - Use `--aios-violet` for brand colour; `--aios-primary` for pill buttons only.
-- Ration chromatic colour to badges, sparklines, and the prism mark.
+- Ration chromatic colour to badges, sparklines, and the bare prism mark.
+- Render the logo from `@aios-alpha/ui`'s `AiosLogo` (or `dist/brand/*`) — never rebuild the lockup.
 - Self-host Instrument + JetBrains Mono; set `font-synthesis: none` on `html`.
 
 **Don't**
 - Don't use `primary` for tier/kind badges — use `violet` and supporting accent tokens.
 - Don't faux-bold Instrument Serif.
 - Don't use `text-[var(--aios-text-*)]` for font sizes in Tailwind v4.
-- Don't hand-edit `dist/` — run `npm run build:tokens`.
+- Don't hand-edit `dist/` — run `npm run build:tokens` / `npm run build:brand`.
+- Don't colour the wordmark, or pair the prism gradient with type. Gradient is bare-mark-only.
+- Don't ship a second AIOS symbol (triangle, refracting prism, drawn chevron) in a favicon or app icon.
 
 ---
 
@@ -223,3 +313,22 @@ All are per-mode design-system tokens, so consumers get them for free. Compose p
   contrast-tested terminal/demo palette. Each exception needs a rationale and regression guard.
 - Framework adapter ramps and decorative bokeh are derived from canonical tokens; they are not
   exceptions.
+
+---
+
+## 0.4.0 — Brand & logo contract
+
+The design system now owns the logo. Before this release AIOS had six mutually inconsistent
+marks in circulation and no written rule, so each surface invented its own — including a
+multicolour wordmark that fought the Editorial Minimal chrome everywhere it appeared.
+
+- **One monochrome logo.** The `## Brand & Logo` section above is the contract: caret-A mark,
+  `AIOS` in Instrument Sans 600, single-colour lockups, defined metrics and clear space.
+- **Assets ship from this package.** `@aios-alpha/design/brand/*` — mark, wordmark, horizontal
+  and stacked lockups, each in `currentColor` plus baked `-black` / `-white` ink variants.
+  Generated by `npm run build:brand`; never hand-edited.
+- **`AiosLogo` in `@aios-alpha/ui`** renders the lockup for React surfaces, so chrome no longer
+  hand-assembles a mark next to a text span.
+- **Prism gradient is bare-mark-only**, ≥48px. No gradient lockup asset exists.
+- **Retired:** the multicolour wordmark, the hand-drawn stroked chevron, the solid-triangle
+  favicon, and the refracting-prism app icon. Token values are unchanged in 0.4.0.

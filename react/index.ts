@@ -49,6 +49,8 @@ export { PrismGlow } from "./components/aios/PrismGlow.js";
 export type { PrismGlowProps } from "./components/aios/PrismGlow.js";
 export { GlassNav } from "./components/aios/GlassNav.js";
 export type { GlassNavProps } from "./components/aios/GlassNav.js";
+export { AiosLogo } from "./components/aios/AiosLogo.js";
+export type { AiosLogoProps, AiosLogoVariant } from "./components/aios/AiosLogo.js";
 export { AiosMark } from "./components/aios/AiosMark.js";
 export type { AiosMarkProps } from "./components/aios/AiosMark.js";
 export { KpiStat } from "./components/aios/KpiStat.js";
