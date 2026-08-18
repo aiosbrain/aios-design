@@ -119,6 +119,11 @@ a stylesheet-only consumer upgrades with no work. The one break is in `@aios-alp
 If that monochrome mark is wrong for your surface, you are probably rendering brand artwork rather
 than UI — see the display lockup above.
 
+1.0.0 does not change token values, CSS variables, the Tailwind bridge, brand assets, or any
+component API. It relicenses the packages from MIT to Apache-2.0 and ships as a major version for
+that reason alone — see [`CHANGELOG.md`](CHANGELOG.md) and [`LICENSING.md`](LICENSING.md).
+Upgrading from 0.5.0 is a version-string change and nothing else.
+
 0.5.0 does not change token values. It splits the logo rule by context: product UI and chrome stay
 strictly monochrome, while brand artwork may use the new **display lockup** (prism mark + single-ink
 wordmark). The wordmark is never coloured in either context. See "0.5.0 — UI vs brand artwork" in
