@@ -109,7 +109,7 @@ logo:
     mark-height: 1.30 x wordmark cap height (horizontal lockup); 1.55 x (stacked)
     gap: 0.78 x cap height (horizontal); 0.52 x cap height (stacked)
     clear-space: 1 x mark ink height on all four sides
-    min-size: lockup 96px wide; bare mark 16px; prism mark 48px
+    min-size: lockup 96px wide; bare mark 16px; prism mark 48px in layout (aios-app-icon.svg exempt)
   retired:
     - multicolour wordmark (gradient A + lime I + white OS) — removed in 0.4.0, never reinstate
     - hand-drawn stroked chevron — never matched the mark geometry
@@ -211,8 +211,9 @@ ship alongside each file. Inline the SVG or use it as a CSS mask when you want t
 ### The prism gradient
 
 `linear-gradient(#8b5cf6 → #10b981 → #84cc16)` is allowed on the **bare mark only**, at **48px or
-larger**, as a standalone moment: favicon and app icon (use `aios-app-icon.svg` — a square canvas
-is not something to improvise), merch, a hero or video sting. It is never
+larger**, as a standalone moment: merch, a hero or video sting. Favicons and OS app icons are the
+one exemption from the 48px floor — use `aios-app-icon.svg`, whose inset is drawn for small
+raster sizes, and let the platform pick the pixel size. It is never
 combined with the wordmark, never applied to letterforms, and there is deliberately no gradient
 lockup asset for you to reach for. Everywhere else the gradient is an ambient background effect
 (blurred glow), not ink.
@@ -225,7 +226,8 @@ which you should not be doing.
 - **Mark height** — `1.30 x` wordmark cap height (horizontal), `1.55 x` (stacked).
 - **Gap** — `0.78 x` cap height (horizontal), `0.52 x` cap height (stacked).
 - **Clear space** — one mark ink height on all four sides. Nothing enters it.
-- **Minimum size** — lockup `96px` wide; bare mark `16px`; prism mark `48px`.
+- **Minimum size** — lockup `96px` wide; bare mark `16px`; prism mark `48px` in layout
+  (`aios-app-icon.svg` is exempt — it is drawn for favicon and OS-icon raster sizes).
 
 ### Never
 
