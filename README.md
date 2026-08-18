@@ -103,6 +103,22 @@ artwork only** (social cards, covers, decks, merch, video), never product UI. Re
 the packaged contract version, makes the UI ESM entry directly importable by Node, and narrows the
 consumer-colour exception policy.
 
+### Upgrading from 0.3.x — one visual breaking change
+
+Token values, CSS variables, and the Tailwind bridge are **unchanged** across 0.4.0 and 0.5.0, so
+a stylesheet-only consumer upgrades with no work. The one break is in `@aios-alpha/ui`:
+
+- **`AiosMark` flipped its default in 0.4.0.** It used to render the prism gradient; it now renders
+  `currentColor`. Pass `prism` to get the gradient back. The old `mono` prop is accepted and
+  ignored, so `<AiosMark mono />` still renders correctly — but a bare `<AiosMark />` that used to
+  be colourful is now monochrome. **This changes rendered output without a type error**, so it will
+  not show up in a typecheck; look at the screen.
+- If you were loading `aios-mark-mono.svg` from a consuming repo's own assets, the canonical
+  equivalent is `@aios-alpha/design/brand/aios-mark.svg` (`currentColor`) or `aios-mark-white.svg`.
+
+If that monochrome mark is wrong for your surface, you are probably rendering brand artwork rather
+than UI — see the display lockup above.
+
 0.5.0 does not change token values. It splits the logo rule by context: product UI and chrome stay
 strictly monochrome, while brand artwork may use the new **display lockup** (prism mark + single-ink
 wordmark). The wordmark is never coloured in either context. See "0.5.0 — UI vs brand artwork" in
