@@ -15,6 +15,17 @@ on:
     types: [published]
   workflow_dispatch:
 
+# WHY `npm publish --tag latest` AND NOT A BARE `npm publish`
+# npm refuses to move the `latest` tag BACKWARDS implicitly. Publishing 0.6.0 while 1.0.0
+# was the highest published version failed with:
+#   "Cannot implicitly apply the \"latest\" tag because previously published version 1.0.0
+#    is higher than the new version 0.6.0. You must specify a tag using --tag."
+# That is a real guard against accidentally demoting `latest`, and it fired on a deliberate
+# demotion (the 1.0.0 -> 0.6.0 version correction, #20). Naming the tag explicitly says "yes,
+# this release is the one users should get" — which is true for every release this workflow
+# publishes, since it only ever runs on a published GitHub Release.
+# If this repo ever ships a prerelease, it needs its own tag (e.g. --tag next), NOT this path.
+
 permissions:
   contents: read
   id-token: write # REQUIRED: lets the job mint the OIDC token npm verifies
@@ -50,7 +61,7 @@ jobs:
           if npm view "@aios-alpha/design@$VERSION" version >/dev/null 2>&1; then
             echo "@aios-alpha/design@$VERSION already exists; skipping"
           else
-            npm publish
+            npm publish --tag latest
           fi
 
       # @aios-alpha/ui — React lib compiled to react/dist by tsc.
@@ -63,5 +74,5 @@ jobs:
           if npm view "@aios-alpha/ui@$VERSION" version >/dev/null 2>&1; then
             echo "@aios-alpha/ui@$VERSION already exists; skipping"
           else
-            npm publish
+            npm publish --tag latest
           fi
