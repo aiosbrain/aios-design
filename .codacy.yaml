@@ -1,0 +1,13 @@
+# Codacy configuration.
+#
+# pencil-scripts/ holds generator scripts that run inside Pencil's script runtime, not Node
+# or a browser. They are required to use a top-level `return` to hand nodes back, and to
+# read the injected `pencil` global — both of which a general-purpose JS linter reports as
+# errors (observed on PR #19: 3 issues, all of that shape). Rewriting them to satisfy the
+# linter would stop them working in the only runtime that ever executes them.
+#
+# These are design-source generators, not shipped code: they are excluded from the npm
+# package by the `files` allowlist in package.json, so nothing here reaches a consumer.
+---
+exclude_paths:
+  - "pencil-scripts/**"

@@ -18,3 +18,10 @@ ds-bundle/
 .design-sync/learnings/
 .design-sync/node_modules
 react/.ds-css-build/
+
+# Local direnv bootstrap — machine-specific (matches aios-website / aios-team-brain,
+# which both ignore it). It calls Tessera root helpers that only exist on a dev box.
+.envrc
+
+# npm pack output — build artifacts, never source.
+*.tgz
