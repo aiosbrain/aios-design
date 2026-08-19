@@ -67,9 +67,11 @@ test("the trusted-publishing workflow gates both aligned packages", () => {
   const tagCheck = workflow.indexOf("node scripts/verify-release-tag.mjs");
   const firstPublish = workflow.indexOf("\n            npm publish");
   assert.ok(tagCheck >= 0 && tagCheck < firstPublish, "tag/version validation must precede publishing");
-  assert.match(workflow, /if npm view "@aios-alpha\/design@\$VERSION" version[^]*?else\s+npm publish\s+fi/);
-  assert.match(workflow, /if npm view "@aios-alpha\/ui@\$VERSION" version[^]*?else\s+npm publish\s+fi/);
-  assert.equal((workflow.match(/^\s+npm publish$/gm) ?? []).length, 2);
+  assert.match(workflow, /if npm view "@aios-alpha\/design@\$VERSION" version[^]*?else\s+npm publish --tag latest\s+fi/);
+  assert.match(workflow, /if npm view "@aios-alpha\/ui@\$VERSION" version[^]*?else\s+npm publish --tag latest\s+fi/);
+  assert.equal((workflow.match(/^\s+npm publish --tag latest$/gm) ?? []).length, 2);
+  // A bare `npm publish` cannot move `latest` backwards, which is what broke the 0.6.0 release.
+  assert.doesNotMatch(workflow, /^\s+npm publish$/m);
   assert.match(ci, /working-directory: react\s+run: \|\s+npm ci\s+npm run build\s+npm run check:exports/);
   assert.match(ci, /Verify UI publish surface\s+working-directory: react\s+run: npm pack --dry-run/);
 });
