@@ -88,8 +88,15 @@ test("DESIGN.md restates token values without drifting from tokens/*.json", () =
   const frontmatter = md.slice(0, md.indexOf("\n---", 4));
 
   // colours: the frontmatter documents a subset of each mode, quoted, two-space indented.
+  // Literal patterns rather than `new RegExp(`...${mode}...`)`: the interpolation is provably
+  // safe (the loop iterates a literal array) but a dynamically built regex is indistinguishable
+  // from injection to a static analyser, and this is a two-element set.
+  const MODE_BLOCK = {
+    light: /^  light:\n([\s\S]*?)(?=^  [a-z]+:)/m,
+    dark: /^  dark:\n([\s\S]*?)(?=^  [a-z]+:)/m,
+  };
   for (const mode of ["light", "dark"]) {
-    const block = frontmatter.match(new RegExp(`^  ${mode}:\\n([\\s\\S]*?)(?=^  [a-z]+:)`, "m"))?.[1];
+    const block = frontmatter.match(MODE_BLOCK[mode])?.[1];
     assert.ok(block, `DESIGN.md must keep documenting the ${mode} palette`);
     const documented = Object.fromEntries(
       [...block.matchAll(/^ {4}([a-z0-9-]+): "([^"]+)"/gm)].map((m) => [m[1], m[2]]),
