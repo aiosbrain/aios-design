@@ -238,8 +238,8 @@ describe("GlassNav", () => {
 
 describe("TerminalFrame", () => {
   test("live and static status render different dots", () => {
-    const live = render(<TerminalFrame code="aios push" status="live" />).container.innerHTML;
-    const still = render(<TerminalFrame code="aios push" status="static" />).container.innerHTML;
+    const live = render(<TerminalFrame code="aios push" status="live" />).container.outerHTML;
+    const still = render(<TerminalFrame code="aios push" status="static" />).container.outerHTML;
     expect(live).toContain("bg-lime");
     expect(still).not.toContain("bg-lime");
     expect(live).not.toBe(still);

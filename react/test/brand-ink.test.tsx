@@ -137,7 +137,7 @@ describe("AiosMark", () => {
   test("the deprecated mono prop is accepted and ignored", () => {
     const { container: withMono } = render(<AiosMark mono />);
     const { container: plain } = render(<AiosMark />);
-    expect(withMono.innerHTML).toBe(plain.innerHTML);
+    expect(withMono.outerHTML).toBe(plain.outerHTML);
     expect(withMono.querySelector("svg")!.hasAttribute("mono")).toBe(false);
   });
 });

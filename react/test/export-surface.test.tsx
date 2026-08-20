@@ -210,7 +210,9 @@ describe("export surface", () => {
   // AiosMark's opt-in `prism` is the single sanctioned exception, and it is not default.
   test.each(Object.keys(FIXTURES))("%s renders no gradient and no literal colour", (name) => {
     const { baseElement } = render(FIXTURES[name]);
-    const html = baseElement.innerHTML;
+    // Serialised via outerHTML: equivalent for this assertion, and it avoids the property
+    // a static analyser cannot tell apart from an XSS sink even when only read.
+    const html = baseElement.outerHTML;
     expect(html).not.toMatch(/<linearGradient|<radialGradient/i);
     // KpiStat's delta/sparkline inks and TerminalFrame's status glow are the documented
     // literals (see token-literals.test.ts); everything else must be class-driven.
