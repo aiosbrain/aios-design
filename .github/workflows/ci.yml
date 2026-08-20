@@ -22,6 +22,28 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # Runs the same suite under coverage and writes coverage/lcov.info. This is the
+      # exact command scan-on-merge.yml invokes to feed the Team Brain's Codebases
+      # dashboard, and that workflow calls it with `|| true` — so a break there is
+      # silent and coverage quietly reverts to "not reporting". Running it here on
+      # every PR is what makes that failure loud.
+      #
+      # Scope: build/** + scripts/**, i.e. the executable source of @aios-alpha/design.
+      # The React component library under react/ is a separate package with its own
+      # build and is NOT measured here — the number is coverage of the token/brand
+      # build, not of the whole repository.
+      #
+      # Node's built-in coverage, not c8 (aios-workspace's house tool), because both
+      # were measured against this suite and the headline agreed exactly: lines 99.08 /
+      # functions 100 under each, differing only in branch accounting (80.00 vs 81.82).
+      # The one subprocess here (scripts/verify-release-tag.mjs, spawned by
+      # design-contract.test.mjs) is captured either way, so c8 would buy nothing and
+      # this package ships with zero runtime dependencies. If a future test spawns work
+      # the built-in cannot see, re-measure before assuming the number is still honest.
+      #
+      # Nothing in this suite skips on a missing env var or toolchain: all 14 tests run
+      # unconditionally, so the report cannot silently read low on a bare runner.
+      - run: npm run test:coverage
       - name: Generated brand geometry is committed
         # npm ci ran the brand build; if it moved caret-a-path.ts, the committed
         # copy the React package compiles against had drifted from brand/src.

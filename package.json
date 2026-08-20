@@ -28,7 +28,8 @@
     "build:tokens": "node build/build.mjs",
     "build:brand": "node build/build-brand.mjs",
     "build": "npm run build:tokens && npm run build:brand",
-    "test": "npm run build && node --test test/design-contract.test.mjs",
+    "test": "npm run build && node --test --test-concurrency=1 test/*.test.mjs",
+    "test:coverage": "npm run build && mkdir -p coverage && node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include=build/** --test-coverage-include=scripts/** --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info test/*.test.mjs",
     "prepare": "npm run build"
   },
   "dependencies": {},
