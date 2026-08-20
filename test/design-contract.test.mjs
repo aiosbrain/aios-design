@@ -54,7 +54,10 @@ test("the built stylesheet exposes every canonical light and dark color token", 
   for (const source of ["color.light.json", "color.dark.json"]) {
     const names = Object.keys(readJson(`../tokens/${source}`).color);
     assert.ok(names.length >= 20, `${source} unexpectedly lost color coverage`);
-    for (const name of names) assert.match(css, new RegExp(`--aios-${name}:\\s*`));
+    // Plain substring rather than `new RegExp(`--aios-${name}...`)`: a regex built from a
+    // variable reads as injection to a static analyser, and the declaration we are asserting
+    // is a literal `--aios-<name>:` anyway.
+    for (const name of names) assert.ok(css.includes(`--aios-${name}:`), `missing --aios-${name}`);
   }
 });
 

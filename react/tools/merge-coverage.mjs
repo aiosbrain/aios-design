@@ -21,7 +21,10 @@ const rootLcov = `${repoRoot}coverage/lcov.info`;
 const uiLcov = `${reactDir}coverage/lcov.info`;
 
 const run = (args, cwd) => {
-  const res = spawnSync("npm", args, { cwd, stdio: "inherit", shell: process.platform === "win32" });
+  // `npm` is `npm.cmd` on Windows, which is the only reason a shell was needed. Naming the
+  // binary directly lets us keep shell:false everywhere, so args can never be re-parsed.
+  const bin = process.platform === "win32" ? "npm.cmd" : "npm";
+  const res = spawnSync(bin, args, { cwd, stdio: "inherit", shell: false });
   if (res.status !== 0) process.exit(res.status ?? 1);
 };
 
