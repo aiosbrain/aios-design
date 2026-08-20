@@ -8,6 +8,15 @@
 #
 # These are design-source generators, not shipped code: they are excluded from the npm
 # package by the `files` allowlist in package.json, so nothing here reaches a consumer.
+#
+# react/test/ is excluded for the same class of reason. Codacy's security rules assume a
+# running service; a component test suite is not one. Every finding it raised on PR #23 was
+# a READ of `container.innerHTML` in a jsdom assertion — comparing rendered output, never
+# assigning it — which is what a component test is supposed to do. Rewriting those to satisfy
+# the rule would mean asserting on something other than the rendered markup, i.e. testing less.
+# react/tools/ is deliberately NOT excluded: it is tooling that runs in CI, so it stays scanned.
+# The suite ships in neither package (`files: ["dist"]`).
 ---
 exclude_paths:
   - "pencil-scripts/**"
+  - "react/test/**"
