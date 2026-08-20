@@ -28,10 +28,13 @@ jobs:
       # silent and coverage quietly reverts to "not reporting". Running it here on
       # every PR is what makes that failure loud.
       #
-      # Scope: build/** + scripts/**, i.e. the executable source of @aios-alpha/design.
-      # The React component library under react/ is a separate package with its own
-      # build and is NOT measured here — the number is coverage of the token/brand
-      # build, not of the whole repository.
+      # Scope: BOTH published packages. The node run instruments build/** + scripts/**
+      # (the executable source of @aios-alpha/design); react/tools/merge-coverage.mjs then
+      # runs the @aios-alpha/ui component suite under vitest and appends its lcov records to
+      # the same coverage/lcov.info, because the brain's scanner reads that one file and sums
+      # every LF/LH record in it. Before that merge existed, this repo reported ~99% coverage
+      # over 436 instrumented lines while the React component library — the other package it
+      # publishes — had zero tests and was absent from the denominator entirely.
       #
       # Node's built-in coverage, not c8 (aios-workspace's house tool), because both
       # were measured against this suite and the headline agreed exactly: lines 99.08 /
@@ -41,8 +44,10 @@ jobs:
       # this package ships with zero runtime dependencies. If a future test spawns work
       # the built-in cannot see, re-measure before assuming the number is still honest.
       #
-      # Nothing in this suite skips on a missing env var or toolchain: all 14 tests run
-      # unconditionally, so the report cannot silently read low on a bare runner.
+      # Nothing in either suite skips on a missing env var or toolchain: all 15 node tests
+      # and all 139 component tests run unconditionally, so the report cannot silently read
+      # low on a bare runner. The component runner (vitest + jsdom + Testing Library) is a
+      # react/ devDependency only — @aios-alpha/design still ships zero runtime dependencies.
       - run: npm run test:coverage
       - name: Generated brand geometry is committed
         # npm ci ran the brand build; if it moved caret-a-path.ts, the committed
@@ -56,6 +61,8 @@ jobs:
           npm ci
           npm run build
           npm run check:exports
+          npm run typecheck
+          npm test
       - name: Verify UI publish surface
         working-directory: react
         run: npm pack --dry-run

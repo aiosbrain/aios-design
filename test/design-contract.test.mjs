@@ -72,7 +72,7 @@ test("the trusted-publishing workflow gates both aligned packages", () => {
   assert.equal((workflow.match(/^\s+npm publish --tag latest$/gm) ?? []).length, 2);
   // A bare `npm publish` cannot move `latest` backwards, which is what broke the 0.6.0 release.
   assert.doesNotMatch(workflow, /^\s+npm publish$/m);
-  assert.match(ci, /working-directory: react\s+run: \|\s+npm ci\s+npm run build\s+npm run check:exports/);
+  assert.match(ci, /working-directory: react\s+run: \|\s+npm ci\s+npm run build\s+npm run check:exports\s+npm run typecheck\s+npm test/);
   assert.match(ci, /Verify UI publish surface\s+working-directory: react\s+run: npm pack --dry-run/);
 });
 
@@ -151,4 +151,24 @@ test("the brand contract stays monochrome and every asset is generated from one 
   const markSvg = readFileSync(new URL("aios-mark.svg", brandDir), "utf8");
   const pathFromSvg = markSvg.match(/ d="([^"]+)"/)[1];
   assert.ok(generated.includes(pathFromSvg), "caret-a-path.ts drifted from dist/brand/aios-mark.svg");
+});
+
+test("the coverage report measures both published packages, and the runner never ships", () => {
+  const pkg = readJson("../package.json");
+  const uiPkg = readJson("../react/package.json");
+  // Without this merge step the repo reports coverage of build/** + scripts/** only, and
+  // @aios-alpha/ui — the other package published from here — is absent from the denominator.
+  assert.match(pkg.scripts["test:coverage"], /node react\/tools\/merge-coverage\.mjs$/);
+  assert.equal(uiPkg.scripts.test, "vitest run");
+  assert.equal(uiPkg.scripts["test:coverage"], "vitest run --coverage");
+  // The test runner is a devDependency of the UI package only. @aios-alpha/design keeps zero
+  // dependencies of any kind beyond style-dictionary, and @aios-alpha/ui must not gain a
+  // runtime dependency on a test tool.
+  assert.deepEqual(pkg.dependencies, {});
+  for (const dep of ["vitest", "jsdom", "@testing-library/react", "@vitest/coverage-v8"]) {
+    assert.ok(uiPkg.devDependencies[dep], `react/ must keep ${dep} as a devDependency`);
+    assert.equal(uiPkg.dependencies[dep], undefined, `${dep} must never become a runtime dependency`);
+  }
+  // Only dist/ is published: the suite and its fixtures never reach a consumer.
+  assert.deepEqual(uiPkg.files, ["dist"]);
 });
