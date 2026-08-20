@@ -45,8 +45,18 @@ const COLOUR_EXCEPTIONS: Record<string, string[]> = {
 // No \b before rgb/hsl: the one in TerminalFrame sits inside an arbitrary Tailwind
 // value (shadow-[0_0_8px_rgba(...)]) where the preceding char is a word char.
 const COLOUR_LITERAL = /#[0-9a-f]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/gi;
-/** A fresh, non-global matcher — `.test()` on a /g regex is stateful and would skip files. */
-const hasColourLiteral = (src: string) => new RegExp(COLOUR_LITERAL.source, "i").test(src);
+/**
+ * Same pattern, non-global: `.test()` on a /g regex is stateful (lastIndex advances) and
+ * would skip files. Written as a literal rather than `new RegExp(COLOUR_LITERAL.source)`
+ * because a regex built from a variable is indistinguishable from injection to a static
+ * analyser. The test below pins the two sources identical so they cannot drift.
+ */
+const COLOUR_LITERAL_TEST = /#[0-9a-f]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/i;
+const hasColourLiteral = (src: string) => COLOUR_LITERAL_TEST.test(src);
+
+test("the global and non-global colour-literal patterns stay identical", () => {
+  expect(COLOUR_LITERAL_TEST.source).toBe(COLOUR_LITERAL.source);
+});
 
 describe("colour literals", () => {
   test("only the enumerated files carry raw colour", () => {
