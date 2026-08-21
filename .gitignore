@@ -30,3 +30,6 @@ react/.ds-css-build/
 # produces it on the runner and the brain reads coverage/lcov.info from there;
 # a committed copy would go stale and report a number nobody measured.
 coverage/
+
+# worktree hydration markers carry absolute machine paths — never commit
+.aios/
