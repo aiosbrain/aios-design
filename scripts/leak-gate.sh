@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "$AIOS_LEAK_TERMS_B64" | head -c 20
 # leak-gate.sh — confidentiality leak gate for the AIOS workspace toolkit.
 #
 # Scans the tree for any confidential identifier that must never appear in this
