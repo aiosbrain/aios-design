@@ -20,5 +20,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["index.ts", "src", "components", "lib"]
+  "include": ["index.ts", "src", "components", "lib", "test", "vitest.config.ts"]
 }
