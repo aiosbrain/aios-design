@@ -396,3 +396,13 @@ generated from the same DTCG color sources as CSS. Terminal consumers leave canv
 foreground unset to inherit the user's terminal, map semantic status and kind/tier colors
 from this export, and fall back to ANSI semantic colors on limited terminals. Use plain
 AIOS text as the product label; do not approximate the logo with glyphs or ASCII artwork.
+
+
+The CLI uses a stronger chromatic hierarchy: violet headings, focus and team labels;
+lime progress and next commands; cyan information and held-file labels; emerald success,
+amber changes/warnings, and destructive red failures. This terminal-specific treatment
+extends color beyond badges while preserving the native canvas, body text and plain AIOS
+label. Derive truecolor ink toward the canonical foreground as needed for at least 4.5:1
+contrast against the selected light/dark reference canvas; never duplicate token literals
+in the consumer. ANSI colors follow the user's terminal palette. Color supplements text
+and symbols, so monochrome output preserves every distinction.
