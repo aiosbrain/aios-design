@@ -17,7 +17,8 @@
     "./tailwind-theme.css": "./dist/tailwind-theme.css",
     "./tokens.pencil.json": "./dist/tokens.pencil.json",
     "./brand/*": "./dist/brand/*",
-    "./DESIGN.md": "./DESIGN.md"
+    "./DESIGN.md": "./DESIGN.md",
+    "./terminal": "./dist/terminal.js"
   },
   "files": [
     "dist",

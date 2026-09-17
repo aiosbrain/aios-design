@@ -388,3 +388,11 @@ white lockup reads as a placeholder rather than a brand.
   and interfaces are monochrome, so the display lockup is assets-only.
 
 Token values are unchanged.
+
+## Terminal consumption
+
+`@aios-alpha/design/terminal` exports `terminalColors.light` and `terminalColors.dark`,
+generated from the same DTCG color sources as CSS. Terminal consumers leave canvas and
+foreground unset to inherit the user's terminal, map semantic status and kind/tier colors
+from this export, and fall back to ANSI semantic colors on limited terminals. Use plain
+AIOS text as the product label; do not approximate the logo with glyphs or ASCII artwork.
